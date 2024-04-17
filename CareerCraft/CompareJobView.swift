@@ -48,7 +48,7 @@ struct CompareJobView: View {
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
-                        .background(Color("primary"))
+                        .background(Color("secondary"))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     }
@@ -63,7 +63,7 @@ struct CompareJobView: View {
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
-                        .background(Color("primary"))
+                        .background(Color("secondary"))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     }

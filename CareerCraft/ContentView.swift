@@ -97,12 +97,12 @@ struct ContentView: View {
                     
                 } // close-zstck
                 
+
                 // View from taping ***
                 VStack { // open-vstack
-                    if selectedTab == .ShowJobListView {
-                        ShowJobListView()
-                    } else {
-                        CompareJobView()
+                    switch selectedTab {
+                        case .ShowJobListView:  ShowJobListView()
+                        case .CompareJobView:  CompareJobView()
                     }
                 } // close-vstack
                 .padding(.all)
