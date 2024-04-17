@@ -105,6 +105,7 @@ struct ContentView: View {
             }
         } // close-vstack
         .padding(.top)
+        .padding(.all)
         
 
         Spacer()

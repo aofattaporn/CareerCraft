@@ -14,6 +14,7 @@
 		EE8115172BCFB3DA00AAC34C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */; };
 		EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */; };
 		EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151F2BCFD90200AAC34C /* CompareJobView.swift */; };
+		EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115212BCFEE7B00AAC34C /* Job.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowJobListView.swift; sourceTree = "<group>"; };
 		EE81151F2BCFD90200AAC34C /* CompareJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareJobView.swift; sourceTree = "<group>"; };
+		EE8115212BCFEE7B00AAC34C /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				EE8115132BCFB3DA00AAC34C /* Assets.xcassets */,
 				EE8115152BCFB3DA00AAC34C /* Preview Content */,
 				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
+				EE8115212BCFEE7B00AAC34C /* Job.swift */,
 			);
 			path = CareerCraft;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */,
+				EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */,
 				EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */,
 				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
 				EE8115122BCFB3D600AAC34C /* Item.swift in Sources */,
