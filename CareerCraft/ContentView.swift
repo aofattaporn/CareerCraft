@@ -13,6 +13,7 @@ enum Tabs {
     case CompareJobView
 }
 
+
 struct ContentView: View {
     
     @Environment(\.modelContext) private var modelContext
@@ -61,9 +62,7 @@ struct ContentView: View {
                     .padding(.top)
                     .padding(.all)
                     
-                    
                     // *** tab-content-view  ***
-                    
                     HStack() { // open-hstack
                         Text("List Job")
                             .frame(width: 150)
@@ -91,7 +90,7 @@ struct ContentView: View {
                     .padding(.all)
                     .frame(maxWidth: .infinity)
                     .cornerRadius(10)
-                    .offset(y: 55)
+                    .offset(y: 65)
 
                     
                     

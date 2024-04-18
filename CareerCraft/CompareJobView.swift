@@ -13,7 +13,6 @@ struct CompareJobView: View {
     
     var body: some View {
         
-            
             VStack(spacing: 12){ // open-vstack
                 
                 // *** select label ***

@@ -17,6 +17,7 @@
 		EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115212BCFEE7B00AAC34C /* Job.swift */; };
 		EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115232BD0368900AAC34C /* SelectCompany.swift */; };
 		EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115252BD03FAF00AAC34C /* SelectLabels.swift */; };
+		EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE016D62BD17754000D62B1 /* JobItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		EE8115212BCFEE7B00AAC34C /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		EE8115232BD0368900AAC34C /* SelectCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompany.swift; sourceTree = "<group>"; };
 		EE8115252BD03FAF00AAC34C /* SelectLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabels.swift; sourceTree = "<group>"; };
+		EEE016D62BD17754000D62B1 /* JobItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		EE81150C2BCFB3D600AAC34C /* CareerCraft */ = {
 			isa = PBXGroup;
 			children = (
+				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
 				EE8115252BD03FAF00AAC34C /* SelectLabels.swift */,
 				EE8115232BD0368900AAC34C /* SelectCompany.swift */,
 				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
@@ -160,6 +163,7 @@
 				EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */,
 				EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */,
 				EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */,
+				EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */,
 				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
 				EE8115122BCFB3D600AAC34C /* Item.swift in Sources */,
 				EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */,
