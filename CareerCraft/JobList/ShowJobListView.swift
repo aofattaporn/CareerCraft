@@ -144,10 +144,6 @@ struct ShowJobListView: View {
     private func deleteItems(job: Job) {
         withAnimation {
             modelContext.delete(job)
-//            for index in offsets {
-//                let jobToDelete = jobs[index]
-//                modelContext.delete(jobToDelete)
-//            }
         }
     }
 

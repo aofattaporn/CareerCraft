@@ -11,6 +11,11 @@ struct CompareJobView: View {
     
     @State private var showSelectLabels = false
     
+    @State var company1: Job?
+    @State var company2: Job?
+    @State private var selectorNum1: Int = 1
+    @State private var selectorNum2: Int = 2
+    
     var body: some View {
         
             VStack(spacing: 12){ // open-vstack
@@ -41,29 +46,36 @@ struct CompareJobView: View {
                 HStack {
                     
                     // *** company-1 ***
-                    NavigationLink(destination: SelectCompany()){
+                    NavigationLink(destination: SelectCompany(
+                        company1: $company1,
+                        company2: $company2,
+                        selectorNum: $selectorNum1
+                    )){
                         VStack {
-                            Text("Company 1")
+                            Text(company1 != nil ? company1!.company : "-")
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
-                        .background(Color("secondary"))
-                        .foregroundColor(.white)
+                        .background(company1 != nil ? Color("secondary") : Color("bg-grey"))
+                        .foregroundColor(company1 != nil ? .white : .gray)
                         .cornerRadius(10)
                     }
   
                     
                     
                     // *** company-2 ***
-                    // *** company-1 ***
-                    NavigationLink(destination: SelectCompany()){
+                    NavigationLink(destination: SelectCompany(
+                        company1: $company1,
+                        company2: $company2,
+                        selectorNum: $selectorNum2
+                    )){
                         VStack {
-                            Text("Company 2")
+                            Text(company2 != nil ? company2!.company : "-")
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
-                        .background(Color("secondary"))
-                        .foregroundColor(.white)
+                        .background(company2 != nil ? Color("secondary") : Color("bg-grey"))
+                        .foregroundColor(company2 != nil ? .white : .gray)
                         .cornerRadius(10)
                     }
 
@@ -79,5 +91,5 @@ struct CompareJobView: View {
 }
 
 #Preview {
-    CompareJobView()
+    CompareJobView( )
 }
