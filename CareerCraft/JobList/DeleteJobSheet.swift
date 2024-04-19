@@ -10,14 +10,14 @@ import SwiftData
 
 struct DeleteJobSheet: View {
     
-    var job: Job
+    let job: Job
     @Query private var jobs: [Job]
     @Environment(\.modelContext) private var modelContext
     
     // function-remove-job
-    private func deleteItem() {
+    private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            if let index = jobs.firstIndex(of: job) {
+            for index in offsets {
                 let jobToDelete = jobs[index]
                 modelContext.delete(jobToDelete)
             }
@@ -32,7 +32,7 @@ struct DeleteJobSheet: View {
             HStack {
                 Spacer()
                 Button("Delete") {
-                    deleteItem()
+                    deleteItems(self.job)
                 }
                 .foregroundColor(.red)
                 .padding()
@@ -43,5 +43,5 @@ struct DeleteJobSheet: View {
 }
 
 #Preview {
-    DeleteJobSheet(   job:  Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true))
+    DeleteJobSheet(        Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true))
 }

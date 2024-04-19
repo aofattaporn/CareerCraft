@@ -18,7 +18,6 @@
 		EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115252BD03FAF00AAC34C /* SelectLabels.swift */; };
 		EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE016D62BD17754000D62B1 /* JobItemView.swift */; };
 		EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */; };
-		EEF4747D2BD27A2C007AC810 /* DeleteJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 		EE8115252BD03FAF00AAC34C /* SelectLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabels.swift; sourceTree = "<group>"; };
 		EEE016D62BD17754000D62B1 /* JobItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItemView.swift; sourceTree = "<group>"; };
 		EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterJobSheet.swift; sourceTree = "<group>"; };
-		EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteJobSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,6 @@
 				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
 				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
 				EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */,
-				EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */,
 			);
 			path = JobList;
 			sourceTree = "<group>";
@@ -183,7 +180,6 @@
 				EE8115102BCFB3D600AAC34C /* MainView.swift in Sources */,
 				EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */,
 				EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */,
-				EEF4747D2BD27A2C007AC810 /* DeleteJobSheet.swift in Sources */,
 				EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */,
 				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
 				EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */,

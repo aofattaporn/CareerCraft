@@ -42,6 +42,8 @@ struct ShowJobListView: View {
     
     @State private var showDeleteSheet = false
     @State private var selectedItem: Job?
+    
+    @State var showAlert = false
 
 
     var body: some View {
@@ -84,17 +86,20 @@ struct ShowJobListView: View {
                             ForEach(jobs) { item in
                                 JobItemView(jobItem: item)
                                     .onLongPressGesture {
+                                        self.showAlert.toggle()
                                         self.selectedItem = item
+                                    }.alert(isPresented: $showAlert) {
+                                        Alert(
+                                            title: Text("Just a moment"),
+                                            message: Text("Are you sure you want to delete this item?"),
+                                            primaryButton: .cancel(Text("Cancel")),
+                                            secondaryButton: .destructive(Text("OK")) {
+                                                deleteItems(job: self.selectedItem!)
+                                            }
+                                        )
                                     }
                             }
-                            .sheet(isPresented: $showDeleteSheet) {
-                                if #available(iOS 16.0, *) {
-                                    if let selectedItem = self.selectedItem {
-                                        DeleteJobSheet(job: selectedItem)
-                                            .presentationDetents([.fraction(0.25)])
-                                    }
-                                }
-                            }
+      
                                   
                     }  // close-vstack-2 [show-list job]
                 }
@@ -132,6 +137,17 @@ struct ShowJobListView: View {
             
             modelContext.insert(randomItem)
             }
+    }
+    
+    // function-remove-job
+    private func deleteItems(job: Job) {
+        withAnimation {
+            modelContext.delete(job)
+//            for index in offsets {
+//                let jobToDelete = jobs[index]
+//                modelContext.delete(jobToDelete)
+//            }
+        }
     }
 
 }
