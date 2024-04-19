@@ -85,6 +85,21 @@ struct ShowJobListView: View {
                     VStack {
                         ForEach(jobs) { item in
                                 JobItemView(jobItem: item)
+                                .onTapGesture {}
+                                .onLongPressGesture {
+                                    self.showAlert.toggle()
+                                    self.selectedItem = item
+                                }
+                                .alert(isPresented: $showAlert) {
+                                    Alert(
+                                        title: Text("Just a moment"),
+                                        message: Text("Are you sure you want to delete this item?"),
+                                        primaryButton: .cancel(Text("Cancel")),
+                                        secondaryButton: .destructive(Text("OK")) {
+                                            deleteItems(job: self.selectedItem!)
+                                        }
+                                    )
+                                }
                         }
                     }
                 } // close-scrollview-1
