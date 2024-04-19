@@ -118,9 +118,6 @@ struct MainView: View {
                 } // close-vstack
                 .padding(.all)
                 
-
-                
-
                 Spacer()
                 
             } // close-vstack
