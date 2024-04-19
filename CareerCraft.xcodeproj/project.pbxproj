@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */; };
-		EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150F2BCFB3D600AAC34C /* ContentView.swift */; };
-		EE8115122BCFB3D600AAC34C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115112BCFB3D600AAC34C /* Item.swift */; };
+		EE8115102BCFB3D600AAC34C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150F2BCFB3D600AAC34C /* MainView.swift */; };
 		EE8115142BCFB3DA00AAC34C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115132BCFB3DA00AAC34C /* Assets.xcassets */; };
 		EE8115172BCFB3DA00AAC34C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */; };
 		EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */; };
@@ -18,13 +17,14 @@
 		EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115232BD0368900AAC34C /* SelectCompany.swift */; };
 		EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115252BD03FAF00AAC34C /* SelectLabels.swift */; };
 		EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE016D62BD17754000D62B1 /* JobItemView.swift */; };
+		EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */; };
+		EEF4747D2BD27A2C007AC810 /* DeleteJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EE81150A2BCFB3D600AAC34C /* CareerCraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CareerCraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerCraftApp.swift; sourceTree = "<group>"; };
-		EE81150F2BCFB3D600AAC34C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		EE8115112BCFB3D600AAC34C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		EE81150F2BCFB3D600AAC34C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		EE8115132BCFB3DA00AAC34C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowJobListView.swift; sourceTree = "<group>"; };
@@ -33,6 +33,8 @@
 		EE8115232BD0368900AAC34C /* SelectCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompany.swift; sourceTree = "<group>"; };
 		EE8115252BD03FAF00AAC34C /* SelectLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabels.swift; sourceTree = "<group>"; };
 		EEE016D62BD17754000D62B1 /* JobItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItemView.swift; sourceTree = "<group>"; };
+		EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterJobSheet.swift; sourceTree = "<group>"; };
+		EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteJobSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,16 +67,12 @@
 		EE81150C2BCFB3D600AAC34C /* CareerCraft */ = {
 			isa = PBXGroup;
 			children = (
-				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
-				EE8115252BD03FAF00AAC34C /* SelectLabels.swift */,
-				EE8115232BD0368900AAC34C /* SelectCompany.swift */,
-				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
+				EEF474772BD24B20007AC810 /* CompareJob */,
+				EEF474792BD24B67007AC810 /* JobList */,
 				EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */,
-				EE81150F2BCFB3D600AAC34C /* ContentView.swift */,
-				EE8115112BCFB3D600AAC34C /* Item.swift */,
+				EE81150F2BCFB3D600AAC34C /* MainView.swift */,
 				EE8115132BCFB3DA00AAC34C /* Assets.xcassets */,
 				EE8115152BCFB3DA00AAC34C /* Preview Content */,
-				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
 				EE8115212BCFEE7B00AAC34C /* Job.swift */,
 			);
 			path = CareerCraft;
@@ -86,6 +84,27 @@
 				EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EEF474772BD24B20007AC810 /* CompareJob */ = {
+			isa = PBXGroup;
+			children = (
+				EE8115252BD03FAF00AAC34C /* SelectLabels.swift */,
+				EE8115232BD0368900AAC34C /* SelectCompany.swift */,
+				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
+			);
+			path = CompareJob;
+			sourceTree = "<group>";
+		};
+		EEF474792BD24B67007AC810 /* JobList */ = {
+			isa = PBXGroup;
+			children = (
+				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
+				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
+				EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */,
+				EEF4747C2BD27A2C007AC810 /* DeleteJobSheet.swift */,
+			);
+			path = JobList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,11 +180,12 @@
 				EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */,
 				EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */,
 				EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */,
-				EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */,
+				EE8115102BCFB3D600AAC34C /* MainView.swift in Sources */,
 				EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */,
 				EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */,
+				EEF4747D2BD27A2C007AC810 /* DeleteJobSheet.swift in Sources */,
+				EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */,
 				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
-				EE8115122BCFB3D600AAC34C /* Item.swift in Sources */,
 				EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

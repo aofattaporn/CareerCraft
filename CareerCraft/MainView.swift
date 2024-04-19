@@ -13,15 +13,25 @@ enum Tabs {
     case CompareJobView
 }
 
-
-struct ContentView: View {
+struct MainView: View {
     
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var jobs: [Job]
     
     @State var selectedTab = Tabs.ShowJobListView
     @State var isListJobView: Bool = true
     @State var isCompareJob: Bool = false
+    
+    @State private var items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    //@Query private var items: [Job]
+    private var mockItems: [Job] = [
+        Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
+        Job(company: "Company B", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
+        Job(company: "Company C", department: "Design", salaryRange: "$60,000 - $80,000", location: "Los Angeles", workStyle: .online, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
+        Job(company: "Company D", department: "Finance", salaryRange: "$70,000 - $90,000", location: "Chicago", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
+        Job(company: "Company E", department: "Sales", salaryRange: "$50,000 - $70,000", location: "Seattle", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
+        Job(company: "Company F", department: "Human Resources", salaryRange: "$45,000 - $65,000", location: "Boston", workStyle: .online, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)
+    ]
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -29,40 +39,44 @@ struct ContentView: View {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    private func deleteItem(at offsets: IndexSet) {
+      items.remove(atOffsets: offsets)
+    }
 
 
     var body: some View {
              
         NavigationView{ // open-navigation
-             
+            
             VStack { // open-vstack
-                
+
                 ZStack { // open-zstack
                     
-                    // *** tab-content-view  ***
-                    
+                    // *** background-canvas  ***
                     VStack(alignment: .leading) { // open-vstack-2
+                        
                         Text("Find your Job ")
                             .font(.title2)
                             .foregroundColor(.white)
                             .bold()
                         
-                        Text(dateFormatter.string(from: Date())) // Displaying current date
+                        Text(dateFormatter.string(from: Date()))
                             .font(.caption)
                             .foregroundColor(.white)
                         
                     } // close-open-vstack-2
                     .padding()
-                    .padding(.bottom)
+                    .padding(.bottom, 30)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
-                        LinearGradient(gradient: Gradient(colors: [Color(red: 1.0, green: 72.0/255.0, blue: 20.0/255.0), Color(red: 1.0, green: 156.0/255.0, blue: 34.0/255.0)]), startPoint: .leading, endPoint: .trailing)
-                    ) // close-vstack
+                        LinearGradient(gradient: Gradient(colors: [Color("secondary"), Color("primary")]), startPoint: .leading, endPoint: .trailing)
+                    )
                     .cornerRadius(10)
-                    .padding(.top)
                     .padding(.all)
+      
                     
-                    // *** tab-content-view  ***
+                    // *** tab-item-view  ***
                     HStack() { // open-hstack
                         Text("List Job")
                             .frame(width: 150)
@@ -90,13 +104,11 @@ struct ContentView: View {
                     .padding(.all)
                     .frame(maxWidth: .infinity)
                     .cornerRadius(10)
-                    .offset(y: 65)
-
-                    
+                    .offset(y: 55)
+                    .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
                     
                 } // close-zstck
                 
-
                 // View from taping ***
                 VStack { // open-vstack
                     switch selectedTab {
@@ -105,6 +117,9 @@ struct ContentView: View {
                     }
                 } // close-vstack
                 .padding(.all)
+                
+
+                
 
                 Spacer()
                 
@@ -113,14 +128,10 @@ struct ContentView: View {
             
  
         } // close-navigation
-
-            
-
-    
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    MainView()
+        .modelContainer(for: Job.self, inMemory: true)
 }
