@@ -22,17 +22,6 @@ struct MainView: View {
     @State var isListJobView: Bool = true
     @State var isCompareJob: Bool = false
     
-    @State private var items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-    //@Query private var items: [Job]
-    private var mockItems: [Job] = [
-        Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-        Job(company: "Company B", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-        Job(company: "Company C", department: "Design", salaryRange: "$60,000 - $80,000", location: "Los Angeles", workStyle: .online, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-        Job(company: "Company D", department: "Finance", salaryRange: "$70,000 - $90,000", location: "Chicago", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-        Job(company: "Company E", department: "Sales", salaryRange: "$50,000 - $70,000", location: "Seattle", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-        Job(company: "Company F", department: "Human Resources", salaryRange: "$45,000 - $65,000", location: "Boston", workStyle: .online, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)
-    ]
-    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -40,11 +29,6 @@ struct MainView: View {
         return formatter
     }()
     
-    private func deleteItem(at offsets: IndexSet) {
-      items.remove(atOffsets: offsets)
-    }
-
-
     var body: some View {
              
         NavigationView{ // open-navigation

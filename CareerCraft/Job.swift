@@ -56,15 +56,15 @@ final class Job {
     ) {
         
         self.company = company
-        self.department = department!
-        self.salaryRange = salaryRange!
-        self.location = location!
-        self.workStyleValue = workStyle!.rawValue
-        self.workTimeValue = workTime!.rawValue
-        self.hasbonusFrequency = hasbonusFrequency!
-        self.hasSocialSecurity = hasSocialSecurity!
-        self.hasProvidentFund = hasProvidentFund!
-        self.hasEquipment = hasEquipment!
+         self.department = department ?? ""
+         self.salaryRange = salaryRange ?? ""
+         self.location = location ?? ""
+         self.workStyleValue = workStyle?.rawValue ?? ""
+         self.workTimeValue = workTime?.rawValue ?? ""
+         self.hasbonusFrequency = hasbonusFrequency ?? false
+         self.hasSocialSecurity = hasSocialSecurity ?? false
+         self.hasProvidentFund = hasProvidentFund ?? false
+         self.hasEquipment = hasEquipment ?? false
     }
 }
 

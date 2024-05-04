@@ -21,36 +21,32 @@ struct WhiteBorder: TextFieldStyle {
     }
 }
 
-
-private var mockItems: [Job] = [
-    Job(company: "Tech Solutions Inc.", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Marketing Innovations Co.", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "DesignWorks Studio", department: "Design", salaryRange: "$60,000 - $80,000", location: "Los Angeles", workStyle: .online, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Financial Services LLC", department: "Finance", salaryRange: "$70,000 - $90,000", location: "Chicago", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Sales Solutions Group", department: "Sales", salaryRange: "$50,000 - $70,000", location: "Seattle", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Human Capital Partners", department: "Human Resources", salaryRange: "$45,000 - $65,000", location: "Boston", workStyle: .online, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)
-]
-
 struct ShowJobListView: View {
     
     
     @Environment(\.modelContext) private var modelContext
     @Query private var jobs: [Job]
     
-    @State private var username: String = ""
+    @State private var searchJob: String = ""
     @State private var showFilterJobSheet = false
     
     @State private var showDeleteSheet = false
     @State private var selectedItem: Job?
     
     @State var showAlert = false
-
+    @State var showAddItemView = false
+    
+    var searchResults: [Job] {
+        return searchJob.isEmpty ? jobs : jobs.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
+            $0.department!.lowercased().contains(searchJob.lowercased())
+        }
+    }
 
     var body: some View {
         VStack(alignment: .center) { // open-vstack
         
             // *** textField-for-searching ***
-            TextField("Search Company", text: $username)
+            TextField("Search Company or Department", text: $searchJob)
                 .padding(.vertical, 10)
                 .padding(.horizontal, 24)
                 .background(Color.white)
@@ -72,7 +68,7 @@ struct ShowJobListView: View {
                 .sheet(isPresented: $showFilterJobSheet) {
                     if #available(iOS 16.0, *) {
                         FilterJobSheet()
-                            .presentationDetents([.fraction(0.25)])
+                            .presentationDetents([.fraction(0.75)])
                     
                     }
                 }
@@ -83,7 +79,7 @@ struct ShowJobListView: View {
                 
                 ScrollView([.vertical]){ // open-scrollview-1
                     VStack {
-                        ForEach(jobs) { item in
+                        ForEach(searchResults) { item in
                                 JobItemView(jobItem: item)
                                 .onTapGesture {}
                                 .onLongPressGesture {
@@ -111,7 +107,7 @@ struct ShowJobListView: View {
                     HStack { // open-hstack
                         Spacer()
                         Button(action: {
-                            addItem()
+                            self.showAddItemView.toggle()
                         }) { // open-flotting-btn
                             Image(systemName: "plus")
                                  .padding()
@@ -122,6 +118,7 @@ struct ShowJobListView: View {
                         } // close-flotting-btn
                         .padding(.trailing, 16)
                         .padding(.bottom, 16)
+                        .fullScreenCover(isPresented: $showAddItemView){ AddJobView() }
                     } // close-hstack
                     
                 } // close-vstack-3
@@ -130,15 +127,6 @@ struct ShowJobListView: View {
         
     } // close-vstack
     
-    // function-add-job
-    private func addItem() {
-        withAnimation {
-            let randomIndex = Int.random(in: 0..<mockItems.count)
-            let randomItem = mockItems[randomIndex]
-            
-            modelContext.insert(randomItem)
-            }
-    }
     
     // function-remove-job
     private func deleteItems(job: Job) {

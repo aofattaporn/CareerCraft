@@ -16,6 +16,7 @@
 		EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115212BCFEE7B00AAC34C /* Job.swift */; };
 		EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115232BD0368900AAC34C /* SelectCompany.swift */; };
 		EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115252BD03FAF00AAC34C /* SelectLabels.swift */; };
+		EEDB550E2BE3D0DC009F667B /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB550D2BE3D0DC009F667B /* AddJobView.swift */; };
 		EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE016D62BD17754000D62B1 /* JobItemView.swift */; };
 		EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,7 @@
 		EE8115212BCFEE7B00AAC34C /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		EE8115232BD0368900AAC34C /* SelectCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompany.swift; sourceTree = "<group>"; };
 		EE8115252BD03FAF00AAC34C /* SelectLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabels.swift; sourceTree = "<group>"; };
+		EEDB550D2BE3D0DC009F667B /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
 		EEE016D62BD17754000D62B1 /* JobItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItemView.swift; sourceTree = "<group>"; };
 		EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterJobSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
 				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
 				EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */,
+				EEDB550D2BE3D0DC009F667B /* AddJobView.swift */,
 			);
 			path = JobList;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEDB550E2BE3D0DC009F667B /* AddJobView.swift in Sources */,
 				EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */,
 				EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */,
 				EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */,
