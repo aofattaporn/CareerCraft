@@ -13,20 +13,39 @@ struct AddJobView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
+    var job: Job?
+    
+    let workStyles:[WorkStyle] = [.onsite, .online, .hybrid]
+    let workTimes:[WorkTime]  = [.flexible, .fixed]
+
     @State private var companyName: String = ""
     @State private var departmentName: String = ""
     @State private var location: String = ""
     @State private var minSalary: String = ""
     @State private var maxSalary: String = ""
     @State private var workStyleIndex: Int = 3
-    let workStyles:[WorkStyle] = [.onsite, .online, .hybrid]
-    @State private var workTimeIndex: Int = 2
-    let workTimes:[WorkTime]  = [.flexible, .fixed]
-    
+    @State private var workTimeIndex: Int = 3
     @State private var hasbonusFrequency: Bool = false
     @State private var hasSocialSecurity: Bool = false
     @State private var hasProvidentFund: Bool = false
     @State private var hasEquipment: Bool = false
+    
+    init(job: Job? = nil) {
+        self.job = job
+        if let job = job {
+            _companyName = State(initialValue: job.company)
+            _departmentName = State(initialValue: job.department ?? "")
+            _location = State(initialValue: job.location ?? "")
+            _minSalary = State(initialValue: job.salaryRange ?? "")
+//            _workStyleIndex = State(initialValue: job.workStyle != nil ? workStyles.firstIndex(of: job.workStyle) ?? 3 : 3)
+//            _workTimeIndex = State(initialValue: job.workTime != nil ? workTimes.firstIndex(of: job.workTime) ?? 3 : 3)
+            _hasbonusFrequency = State(initialValue: job.hasbonusFrequency)
+            _hasSocialSecurity = State(initialValue: job.hasSocialSecurity)
+            _hasProvidentFund = State(initialValue: job.hasProvidentFund)
+            _hasEquipment = State(initialValue: job.hasEquipment)
+        }
+    }
+    
 
 
     

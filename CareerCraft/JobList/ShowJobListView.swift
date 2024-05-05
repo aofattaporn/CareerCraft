@@ -36,6 +36,15 @@ struct ShowJobListView: View {
     @State var showAlert = false
     @State var showAddItemView = false
     
+    @State  var filterMinSalary: String = ""
+    @State  var filterMaxSalary: String = ""
+    @State  var workStyleIndex: Int = 3
+    @State  var workTimeIndex: Int = 3
+    @State  var filterHasbonusFrequency: Bool = false
+    @State  var filterHasSocialSecurity: Bool = false
+    @State  var filterHasProvidentFund: Bool = false
+    @State  var filterHasEquipment: Bool = false
+    
     var searchResults: [Job] {
         return searchJob.isEmpty ? jobs : jobs.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
             $0.department!.lowercased().contains(searchJob.lowercased())
@@ -67,7 +76,16 @@ struct ShowJobListView: View {
                 } // close-filtern-btn
                 .sheet(isPresented: $showFilterJobSheet) {
                     if #available(iOS 16.0, *) {
-                        FilterJobSheet()
+                        FilterJobSheet(
+                            filterMinSalary: $filterMinSalary,
+                            filterMaxSalary: $filterMaxSalary,
+                            workStyleIndex:  $workStyleIndex,
+                            workTimeIndex:   $workTimeIndex,
+                            filterHasbonusFrequency: $filterHasbonusFrequency,
+                            filterHasSocialSecurity: $filterHasbonusFrequency,
+                            filterHasProvidentFund:$filterHasbonusFrequency,
+                            filterHasEquipment: $filterHasbonusFrequency
+                        )
                             .presentationDetents([.fraction(0.75)])
                     
                     }
@@ -81,7 +99,26 @@ struct ShowJobListView: View {
                     VStack {
                         ForEach(searchResults) { item in
                                 JobItemView(jobItem: item)
-                                .onTapGesture {}
+                                .onTapGesture {
+                                    self.showAddItemView.toggle()
+                                }
+                                .fullScreenCover(isPresented: $showAddItemView){
+                                    AddJobView(
+                                        job: Job(
+                                            company: item.company,
+                                            department: item.department,
+                                            salaryRange: item.salaryRange,
+                                            location:  item.location,
+                                            workStyle: item.workStyle,
+                                            workTime: item.workTime,
+                                            hasbonusFrequency: item.hasbonusFrequency,
+                                            hasSocialSecurity: item.hasSocialSecurity,
+                                            hasProvidentFund: item.hasProvidentFund,
+                                            hasEquipment:item.hasEquipment
+                                        
+                                        )
+                                    )
+                                }
                                 .onLongPressGesture {
                                     self.showAlert.toggle()
                                     self.selectedItem = item
@@ -118,7 +155,7 @@ struct ShowJobListView: View {
                         } // close-flotting-btn
                         .padding(.trailing, 16)
                         .padding(.bottom, 16)
-                        .fullScreenCover(isPresented: $showAddItemView){ AddJobView() }
+                        .fullScreenCover(isPresented: $showAddItemView){ AddJobView( job: nil) }
                     } // close-hstack
                     
                 } // close-vstack-3
