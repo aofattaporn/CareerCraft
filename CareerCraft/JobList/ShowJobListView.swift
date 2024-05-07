@@ -38,12 +38,26 @@ struct ShowJobListView: View {
     
     @State  var filterMinSalary: String = ""
     @State  var filterMaxSalary: String = ""
-    @State  var workStyleIndex: Int = 3
-    @State  var workTimeIndex: Int = 3
+//    @State  var workStyleIndex: Int = 3
+//    @State  var workTimeIndex: Int = 3
     @State  var filterHasbonusFrequency: Bool = false
     @State  var filterHasSocialSecurity: Bool = false
     @State  var filterHasProvidentFund: Bool = false
     @State  var filterHasEquipment: Bool = false
+    
+    @State private var companyName: String = ""
+    @State private var departmentName: String = ""
+    @State private var location: String = ""
+    @State private var minSalary: String = ""
+    @State private var maxSalary: String = ""
+    @State private var workStyleIndex: Int = 4
+    @State private var workTimeIndex: Int = 4
+    @State private var hasbonusFrequency: Bool = false
+    @State private var hasSocialSecurity: Bool = false
+    @State private var hasProvidentFund: Bool = false
+    @State private var hasEquipment: Bool = false
+    
+
     
     var searchResults: [Job] {
         return searchJob.isEmpty ? jobs : jobs.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
@@ -100,23 +114,36 @@ struct ShowJobListView: View {
                         ForEach(searchResults) { item in
                                 JobItemView(jobItem: item)
                                 .onTapGesture {
+          
+                                    
+                                    self.companyName = item.company
+                                    self.departmentName = item.department ?? ""
+                                    self.location = item.location ?? ""
+                                    self.minSalary = item.salaryRange ?? ""
+                                    self.maxSalary = item.salaryRange ?? ""
+                                    self.workStyleIndex = 4
+                                    self.workTimeIndex = 4
+                                    self.hasbonusFrequency = item.hasbonusFrequency
+                                    self.hasSocialSecurity = item.hasSocialSecurity
+                                    self.hasProvidentFund = item.hasProvidentFund
+                                    self.hasEquipment = item.hasEquipment
+                                    
                                     self.showAddItemView.toggle()
+                                    self.selectedItem = item
                                 }
                                 .fullScreenCover(isPresented: $showAddItemView){
                                     AddJobView(
-                                        job: Job(
-                                            company: item.company,
-                                            department: item.department,
-                                            salaryRange: item.salaryRange,
-                                            location:  item.location,
-                                            workStyle: item.workStyle,
-                                            workTime: item.workTime,
-                                            hasbonusFrequency: item.hasbonusFrequency,
-                                            hasSocialSecurity: item.hasSocialSecurity,
-                                            hasProvidentFund: item.hasProvidentFund,
-                                            hasEquipment:item.hasEquipment
-                                        
-                                        )
+                                        companyName: $companyName,
+                                        departmentName: $departmentName,
+                                        location: $location,
+                                        minSalary: $minSalary,
+                                        maxSalary: $maxSalary,
+                                        workStyleIndex: $workStyleIndex,
+                                        workTimeIndex: $workTimeIndex,
+                                        hasbonusFrequency: $hasbonusFrequency,
+                                        hasSocialSecurity: $hasSocialSecurity,
+                                        hasProvidentFund: $hasProvidentFund,
+                                        hasEquipment: $hasEquipment
                                     )
                                 }
                                 .onLongPressGesture {
@@ -155,9 +182,24 @@ struct ShowJobListView: View {
                         } // close-flotting-btn
                         .padding(.trailing, 16)
                         .padding(.bottom, 16)
-                        .fullScreenCover(isPresented: $showAddItemView){ AddJobView( job: nil) }
+                        .fullScreenCover(isPresented: $showAddItemView){
+                            AddJobView(
+                                companyName: .constant(""),
+                                departmentName: .constant(""),
+                                location: .constant(""),
+                                minSalary: .constant(""),
+                                maxSalary: .constant(""),
+                                workStyleIndex: .constant(4),
+                                workTimeIndex: .constant(4),
+                                hasbonusFrequency: .constant(false),
+                                hasSocialSecurity: .constant(false),
+                                hasProvidentFund: .constant(false),
+                                hasEquipment: .constant(false)
+                            )
+
+                        }
                     } // close-hstack
-                    
+                     
                 } // close-vstack-3
             }
         }

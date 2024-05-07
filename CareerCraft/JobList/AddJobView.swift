@@ -12,70 +12,83 @@ struct AddJobView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
+            
+    let workStyles: [WorkStyle] = [.onsite, .online, .hybrid]
+    let workTimes: [WorkTime] = [.flexible, .fixed]
     
-    var job: Job?
     
-    let workStyles:[WorkStyle] = [.onsite, .online, .hybrid]
-    let workTimes:[WorkTime]  = [.flexible, .fixed]
-
-    @State private var companyName: String = ""
-    @State private var departmentName: String = ""
-    @State private var location: String = ""
-    @State private var minSalary: String = ""
-    @State private var maxSalary: String = ""
-    @State private var workStyleIndex: Int = 3
-    @State private var workTimeIndex: Int = 3
-    @State private var hasbonusFrequency: Bool = false
-    @State private var hasSocialSecurity: Bool = false
-    @State private var hasProvidentFund: Bool = false
-    @State private var hasEquipment: Bool = false
+    @Binding  var companyName: String
+    @Binding  var departmentName: String
+    @Binding  var location: String
+    @Binding  var minSalary: String
+    @Binding  var maxSalary: String
+    @Binding  var workStyleIndex: Int
+    @Binding  var workTimeIndex: Int
+    @Binding  var hasbonusFrequency: Bool
+    @Binding  var hasSocialSecurity: Bool
+    @Binding  var hasProvidentFund: Bool
+    @Binding  var hasEquipment: Bool
     
-    init(job: Job? = nil) {
-        self.job = job
-        if let job = job {
-            _companyName = State(initialValue: job.company)
-            _departmentName = State(initialValue: job.department ?? "")
-            _location = State(initialValue: job.location ?? "")
-            _minSalary = State(initialValue: job.salaryRange ?? "")
-//            _workStyleIndex = State(initialValue: job.workStyle != nil ? workStyles.firstIndex(of: job.workStyle) ?? 3 : 3)
-//            _workTimeIndex = State(initialValue: job.workTime != nil ? workTimes.firstIndex(of: job.workTime) ?? 3 : 3)
-            _hasbonusFrequency = State(initialValue: job.hasbonusFrequency)
-            _hasSocialSecurity = State(initialValue: job.hasSocialSecurity)
-            _hasProvidentFund = State(initialValue: job.hasProvidentFund)
-            _hasEquipment = State(initialValue: job.hasEquipment)
-        }
+    func resetData() {
+        companyName = ""
+        departmentName = ""
+        location = ""
+        minSalary = ""
+        maxSalary = ""
+        workStyleIndex = 4
+        workTimeIndex = 4
+        hasbonusFrequency = false
+        hasSocialSecurity = false
+        hasProvidentFund = false
+        hasEquipment = false
     }
     
+    private func addItem() {
+        withAnimation {
+            modelContext.insert(Job(
+                company: self.companyName,
+                department: self.departmentName,
+                salaryRange: self.minSalary,
+                location: self.location,
+                workStyle: self.workStyleIndex < 3 ? self.workStyles[self.workStyleIndex] : nil,
+                workTime: self.workTimeIndex < 2 ? self.workTimes[self.workTimeIndex] : nil,
+                hasbonusFrequency: self.hasbonusFrequency,
+                hasSocialSecurity: self.hasSocialSecurity,
+                hasProvidentFund: self.hasProvidentFund,
+                hasEquipment:  self.hasEquipment))
+        }
+    }
 
 
-    
     var body: some View {
         
-        VStack {
+        VStack { // open-vstack
             
-            
-            HStack {
-                Button(action: { dismiss() }) {
-                    Text("Back")
-                }
-                
-                Spacer()
+            HStack { // open-hstaack
                 
                 Button(action: {
+                    dismiss()
+                    resetData()
+                }) {
+                    Text("Back")
+                }
+                Spacer()
+                Button(action: {
                     addItem()
+                    resetData()
                     dismiss()
                 }) {
                     Text("Save")
-                        .disabled(companyName.isEmpty)
                 }
-            }
+                
+            } // close-hstack
             .padding(.all)
             
-            ScrollView {
+            ScrollView { // open-scrollview
                 
-                VStack(alignment: .leading, spacing: 0.0) {
+                VStack(alignment: .leading, spacing: 0.0) { // open-vstack-2
                     
-                    // Company Name
+                    // **** Company Name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Company Name")
                             .font(.headline)
@@ -85,7 +98,7 @@ struct AddJobView: View {
                     }
                     .padding()
                     
-                    // Department Name
+                    // **** Department Name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Department Name")
                             .font(.headline)
@@ -96,7 +109,7 @@ struct AddJobView: View {
                     .padding()
                     
                     
-                    // Location Name
+                    // **** Location Name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Location")
                             .font(.headline)
@@ -108,7 +121,7 @@ struct AddJobView: View {
                     
 
                     
-                    // Salary Range
+                    // **** Salary Range ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Salary Range")
                             .font(.headline)
@@ -120,7 +133,7 @@ struct AddJobView: View {
                     }
                     .padding()
                     
-                    // Work Time
+                    // **** Work Time ****
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             Text("Work Time")
@@ -145,7 +158,7 @@ struct AddJobView: View {
                     }
                     .padding()
                     
-                    // Work Style
+                    // **** Work Style ****
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             Text("Work Style")
@@ -171,7 +184,7 @@ struct AddJobView: View {
                     .padding()
                     
                     
-                    // warefare
+                    // **** warefare ****
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Welfare")
                             .font(.headline)
@@ -193,23 +206,6 @@ struct AddJobView: View {
         }
     }
     
-    private func addItem() {
-        withAnimation {
-
-            
-            modelContext.insert(Job(
-                company: self.companyName,
-                department: self.departmentName,
-                salaryRange: self.minSalary,
-                location: self.location,
-                workStyle: self.workStyleIndex < 3 ? self.workStyles[self.workStyleIndex] : nil,
-                workTime: self.workTimeIndex < 2 ? self.workTimes[self.workTimeIndex] : nil,
-                hasbonusFrequency: self.hasbonusFrequency,
-                hasSocialSecurity: self.hasSocialSecurity,
-                hasProvidentFund: self.hasProvidentFund,
-                hasEquipment:  self.hasEquipment))
-        }
-    }
 }
 
 struct CustomTextFieldStyle: TextFieldStyle {
@@ -218,7 +214,6 @@ struct CustomTextFieldStyle: TextFieldStyle {
             .padding(10)
             .background(Color.gray.opacity(0.1))
             .cornerRadius(8)
-            
     }
 }
 
@@ -289,6 +284,6 @@ struct CheckboxToggleStyle: ToggleStyle {
     }
 }
 
-#Preview {
-    AddJobView()
-}
+//#Preview {
+//    AddJobView()
+//}
