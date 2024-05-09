@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import PhotosUI
 
 struct AddJobView: View {
     
@@ -22,7 +23,12 @@ struct AddJobView: View {
     @State private var hasSocialSecurity: Bool = false
     @State private var hasProvidentFund: Bool = false
     @State private var hasEquipment: Bool = false
-
+    
+    @State var sekectedCategory: Category?
+    
+    @State var selectedPhoto: PhotosPickerItem?
+    @State var selectedPhotoData: Data?
+    
     private func addItem() {
         let newJob = Job(
             company: company,
@@ -35,7 +41,8 @@ struct AddJobView: View {
             hasbonusFrequency: hasbonusFrequency,
             hasSocialSecurity: hasSocialSecurity,
             hasProvidentFund: hasProvidentFund,
-            hasEquipment: hasEquipment
+            hasEquipment: hasEquipment,
+            imageData: selectedPhotoData
         )
         
         withAnimation {
@@ -57,6 +64,7 @@ struct AddJobView: View {
             myJob?.hasbonusFrequency = hasbonusFrequency
             myJob?.hasSocialSecurity = hasSocialSecurity
             myJob?.hasEquipment = hasEquipment
+            myJob?.imageData = selectedPhotoData
         }
         
         myJob = nil
@@ -93,9 +101,65 @@ struct AddJobView: View {
             ScrollView{
                 
                 VStack(alignment: .leading){ // open-vstack
+                    
+                    Section {
+                        if let selectedPhotoData = selectedPhotoData,
+                           let uiImage = UIImage(data: selectedPhotoData) {
+                            
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(Color.gray).opacity(0.5)
+                                    .frame(maxHeight: 200)
+                                    .cornerRadius(10)
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity, maxHeight: 200)
+                                    .cornerRadius(10)
+                            }
+                            .padding()
+                        }
+                        
+                        PhotosPicker(
+                            selection: $selectedPhoto,
+                            matching: .images,
+                            photoLibrary: .shared()
+                        ) {
+                            if selectedPhotoData == nil {
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(Color.gray)
+                                        .frame(height: 200)
+                                        .cornerRadius(10)
+                                    Image(systemName: "photo")
+                                        .foregroundColor(.white)
+                                }
+                                .padding()
+                            }
+                        }
+                        
+                        if selectedPhotoData != nil {
+                            Button(role: .destructive, action: {
+                                selectedPhoto = nil
+                                selectedPhotoData = nil
+                            }, label: {
+                                HStack{
+                                    Spacer()
+                                    Label("Remove Images", systemImage: "xmark")
+                                        .foregroundColor(.red)
+                                }
+                                .padding()
+                            })
+                        }
+                    }
+
+                    
+                    
+
+                    
                     // **** company-name ****
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Company Name")
+                        Text("Company Name*")
                             .font(.headline)
                         HStack {
                             CustomTextField(text: $company, placeholder: "Enter company name")
@@ -223,6 +287,8 @@ struct AddJobView: View {
                 hasSocialSecurity = job.hasSocialSecurity
                 hasProvidentFund = job.hasProvidentFund
                 hasEquipment = job.hasEquipment
+                selectedPhotoData = job.imageData
+
             } else {
                 company = ""
                 department = ""
@@ -235,8 +301,14 @@ struct AddJobView: View {
                 hasSocialSecurity = false
                 hasProvidentFund = false
                 hasEquipment = false
+                selectedPhotoData = nil
             }
         }
+        .task(id: selectedPhoto) {
+            if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
+                selectedPhotoData  = data
+            }
+         }
     } // close-view
 }
 

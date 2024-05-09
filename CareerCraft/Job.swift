@@ -24,6 +24,9 @@ final class Job {
     var hasProvidentFund: Bool
     var hasEquipment: Bool
     
+    @Attribute(.externalStorage)
+    var imageData: Data?
+    
 //    @Transient var workStyle: WorkStyle {
 //        get {
 //            return WorkStyle(rawValue: String(workStyleValue)) ?? .onsite }
@@ -55,7 +58,8 @@ final class Job {
          hasbonusFrequency: Bool?,
          hasSocialSecurity: Bool?,
          hasProvidentFund: Bool?,
-         hasEquipment: Bool?
+         hasEquipment: Bool?,
+         imageData: Data?
     ) {
         
         self.company = company
@@ -69,7 +73,9 @@ final class Job {
         self.hasSocialSecurity = hasSocialSecurity ?? false
         self.hasProvidentFund = hasProvidentFund ?? false
         self.hasEquipment = hasEquipment ?? false
+        self.imageData = imageData ?? nil
     }
+    
 }
 
 enum WorkStyle: String {
