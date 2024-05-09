@@ -72,7 +72,12 @@ struct SelectLabels: View {
                 filterJobTypeKeys.append(text)
             }
         }, label: {
-            Text(text)
+
+            Text(
+                text == "workStyleIndex" ? "workStyle" :
+                text == "workTimeIndex" ? "workTime" :
+                text
+            )
                 .padding(.all, 5)
                 .font(.body)
                 .background(filterJobTypeKeys.contains(text) ? Color("secondary") : Color("bg-grey"))

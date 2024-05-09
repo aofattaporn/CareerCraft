@@ -24,24 +24,22 @@ struct CompareJobView: View {
     
     @Query private var jobs: [Job]
     @State private var jobTypeKeys: [String] = [
-        "company",
         "department",
         "salaryRange",
         "location",
-        "workStyle",
-        "workTime",
+        "workStyleIndex",
+        "workTimeIndex",
         "hasbonusFrequency",
         "hasSocialSecurity",
         "hasProvidentFund",
         "hasEquipment"
     ]
     @State private var filterJobTypeKeys: [String] = [
-        "company",
         "department",
         "salaryRange",
         "location",
-        "workStyle",
-        "workTime",
+        "workStyleIndex",
+        "workTimeIndex",
         "hasbonusFrequency",
         "hasSocialSecurity",
         "hasProvidentFund",
@@ -59,8 +57,8 @@ struct CompareJobView: View {
         case "department": return company.department ?? "-"
         case "salaryRange": return company.minSalary  ?? "-"
         case "location": return company.location ?? "-"
-//        case "workStyleIndex": return company.workStyleIndex ? "" : "-"
-//        case "workTimeIndex": return  workTimes[company.workTimeIndex].rawValue ?? "-"
+        case "workTimeIndex": return  (company.workTimeIndex != -1) ? workTimes[company.workTimeIndex!].rawValue : "-"
+        case "workStyleIndex": return (company.workStyleIndex != -1) ? workStyles[company.workStyleIndex!].rawValue : "-"
         case "hasbonusFrequency": return company.hasbonusFrequency ? "Bonus" : "No Bonus"
         case "hasSocialSecurity": return company.hasSocialSecurity ? "SocialSecurity" : "No SocialSecurity"
         case "hasProvidentFund": return company.hasProvidentFund ? "ProvidentFund" : "No ProvidentFund"
@@ -85,7 +83,9 @@ struct CompareJobView: View {
                             .foregroundColor(Color("secondary"))
                     }.sheet(isPresented: $showSelectLabels) {
                         if #available(iOS 16.0, *) {
-                            SelectLabels(jobTypeKeys: self.$jobTypeKeys, filterJobTypeKeys: self.$filterJobTypeKeys)
+                            SelectLabels(
+                                jobTypeKeys: self.$jobTypeKeys,
+                                filterJobTypeKeys: self.$filterJobTypeKeys)
                                 .presentationDetents([.fraction(0.25), .fraction(0.75)])
                                
                         }
@@ -141,27 +141,32 @@ struct CompareJobView: View {
                     }
                     
                     
+                    
                     ScrollView([.vertical]) {
                         VStack(alignment: .center) {
-                            ForEach(Array(filterJobTypeKeys.enumerated()), id: \.element) { index, key in
-                                HStack {
-                                    VStack {
-                                        Spacer()
-                                        Text(self.value(forKey: key, company: self.company1))
-                                        Spacer()
+                            
+                            if (company1 != nil)  || (company2 != nil)  {
+                                ForEach(Array(filterJobTypeKeys.enumerated()), id: \.element) { index, key in
+                                    HStack {
+                                        VStack {
+                                            Spacer()
+                                            Text(self.value(forKey: key, company: self.company1))
+                                            Spacer()
+                                        }
+                                        .frame(maxWidth: .infinity)
+                                        .background(index.isMultiple(of: 2) ? Color("bg-grey") : Color.white) // Alternating row colors
+                                        
+                                        VStack {
+                                            Spacer()
+                                            Text(self.value(forKey: key, company: self.company2))
+                                            Spacer()
+                                        }
+                                        .frame(maxWidth: .infinity)
+                                        .background(index.isMultiple(of: 2) ? Color("bg-grey") : Color.white) // Alternating row colors
                                     }
-                                    .frame(maxWidth: .infinity)
-                                    .background(index.isMultiple(of: 2) ? Color("bg-grey") : Color.white) // Alternating row colors
-                                    
-                                    VStack {
-                                        Spacer()
-                                        Text(self.value(forKey: key, company: self.company2))
-                                        Spacer()
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .background(index.isMultiple(of: 2) ? Color("bg-grey") : Color.white) // Alternating row colors
                                 }
                             }
+ 
                         }
                     }
                     .defaultScrollAnchor(.top)
