@@ -23,7 +23,6 @@ struct WhiteBorder: TextFieldStyle {
 
 struct ShowJobListView: View {
     
-    
     @Environment(\.modelContext) private var modelContext
     @Query private var jobs: [Job]
     
@@ -38,8 +37,7 @@ struct ShowJobListView: View {
     
     @State  var filterMinSalary: String = ""
     @State  var filterMaxSalary: String = ""
-//    @State  var workStyleIndex: Int = 3
-//    @State  var workTimeIndex: Int = 3
+
     @State  var filterHasbonusFrequency: Bool = false
     @State  var filterHasSocialSecurity: Bool = false
     @State  var filterHasProvidentFund: Bool = false
@@ -57,7 +55,8 @@ struct ShowJobListView: View {
     @State private var hasProvidentFund: Bool = false
     @State private var hasEquipment: Bool = false
     
-
+    @State private var isEditing: Bool = false
+    @State private var isCreating: Bool = true
     
     var searchResults: [Job] {
         return searchJob.isEmpty ? jobs : jobs.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
@@ -114,13 +113,11 @@ struct ShowJobListView: View {
                         ForEach(searchResults) { item in
                                 JobItemView(jobItem: item)
                                 .onTapGesture {
-          
-                                    
                                     self.companyName = item.company
                                     self.departmentName = item.department ?? ""
                                     self.location = item.location ?? ""
-                                    self.minSalary = item.salaryRange ?? ""
-                                    self.maxSalary = item.salaryRange ?? ""
+                                    self.minSalary = item.minSalary ?? ""
+                                    self.maxSalary = item.maxSalary ?? ""
                                     self.workStyleIndex = 4
                                     self.workTimeIndex = 4
                                     self.hasbonusFrequency = item.hasbonusFrequency
@@ -128,23 +125,11 @@ struct ShowJobListView: View {
                                     self.hasProvidentFund = item.hasProvidentFund
                                     self.hasEquipment = item.hasEquipment
                                     
-                                    self.showAddItemView.toggle()
                                     self.selectedItem = item
+                                    self.showAddItemView.toggle()
                                 }
                                 .fullScreenCover(isPresented: $showAddItemView){
-                                    AddJobView(
-                                        companyName: $companyName,
-                                        departmentName: $departmentName,
-                                        location: $location,
-                                        minSalary: $minSalary,
-                                        maxSalary: $maxSalary,
-                                        workStyleIndex: $workStyleIndex,
-                                        workTimeIndex: $workTimeIndex,
-                                        hasbonusFrequency: $hasbonusFrequency,
-                                        hasSocialSecurity: $hasSocialSecurity,
-                                        hasProvidentFund: $hasProvidentFund,
-                                        hasEquipment: $hasEquipment
-                                    )
+                                    AddJobView(myJob: $selectedItem)
                                 }
                                 .onLongPressGesture {
                                     self.showAlert.toggle()
@@ -160,6 +145,7 @@ struct ShowJobListView: View {
                                         }
                                     )
                                 }
+                            
                         }
                     }
                 } // close-scrollview-1
@@ -171,6 +157,7 @@ struct ShowJobListView: View {
                     HStack { // open-hstack
                         Spacer()
                         Button(action: {
+                            self.selectedItem = nil
                             self.showAddItemView.toggle()
                         }) { // open-flotting-btn
                             Image(systemName: "plus")
@@ -183,19 +170,8 @@ struct ShowJobListView: View {
                         .padding(.trailing, 16)
                         .padding(.bottom, 16)
                         .fullScreenCover(isPresented: $showAddItemView){
-                            AddJobView(
-                                companyName: .constant(""),
-                                departmentName: .constant(""),
-                                location: .constant(""),
-                                minSalary: .constant(""),
-                                maxSalary: .constant(""),
-                                workStyleIndex: .constant(4),
-                                workTimeIndex: .constant(4),
-                                hasbonusFrequency: .constant(false),
-                                hasSocialSecurity: .constant(false),
-                                hasProvidentFund: .constant(false),
-                                hasEquipment: .constant(false)
-                            )
+                            // TODO : When add pass null ?
+                            AddJobView(myJob:.constant(nil))
 
                         }
                     } // close-hstack

@@ -8,19 +8,13 @@
 import SwiftUI
 import SwiftData
 
-private var mockItems: [Job] = [
-    Job(company: "Tech Solutions Inc.", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Marketing Innovations Co.", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "DesignWorks Studio", department: "Design", salaryRange: "$60,000 - $80,000", location: "Los Angeles", workStyle: .online, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Financial Services LLC", department: "Finance", salaryRange: "$70,000 - $90,000", location: "Chicago", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Sales Solutions Group", department: "Sales", salaryRange: "$50,000 - $70,000", location: "Seattle", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true),
-    Job(company: "Human Capital Partners", department: "Human Resources", salaryRange: "$45,000 - $65,000", location: "Boston", workStyle: .online, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)
-]
 
 struct CompareJobView: View {
     
 
     @State private var showSelectLabels = false
+    let workStyles: [WorkStyle] = [.onsite, .online, .hybrid]
+    let workTimes: [WorkTime] = [.flexible, .fixed]
     
     @State var company1: Job?
     @State var company2: Job?
@@ -63,10 +57,10 @@ struct CompareJobView: View {
         switch key {
         case "company": return company.company
         case "department": return company.department ?? "-"
-        case "salaryRange": return company.salaryRange ?? "-"
+        case "salaryRange": return company.minSalary  ?? "-"
         case "location": return company.location ?? "-"
-        case "workStyle": return company.workStyle.rawValue
-        case "workTime": return company.workTime.rawValue
+//        case "workStyleIndex": return company.workStyleIndex ? "" : "-"
+//        case "workTimeIndex": return  workTimes[company.workTimeIndex].rawValue ?? "-"
         case "hasbonusFrequency": return company.hasbonusFrequency ? "Bonus" : "No Bonus"
         case "hasSocialSecurity": return company.hasSocialSecurity ? "SocialSecurity" : "No SocialSecurity"
         case "hasProvidentFund": return company.hasProvidentFund ? "ProvidentFund" : "No ProvidentFund"

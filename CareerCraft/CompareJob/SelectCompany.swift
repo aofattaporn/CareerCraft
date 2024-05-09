@@ -48,9 +48,12 @@ struct SelectCompany: View {
     }
 }
 
-struct SelectCompany_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectCompany(company1: .constant(Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)),
-                      company2: .constant(Job(company: "Company B", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco", workStyle: .hybrid, workTime: .flexible, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)), selectorNum: .constant(1))
-    }
-}
+//struct SelectCompany_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SelectCompany(
+//            
+//                    company1: .constant(Job(company: "Company A", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyleIndex: 0, workTimeIndex: 0, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)),
+//                      
+//                      company2: .constant(Job(company: "Company B", department: "Marketing", salaryRange: "$40,000 - $60,000", location: "San Francisco",  workStyleIndex: 0, workTimeIndex: 0, hasbonusFrequency: false, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true)), selectorNum: .constant(1))
+//    }
+//}

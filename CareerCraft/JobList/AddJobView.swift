@@ -1,10 +1,3 @@
-//
-//  AddJobView.swift
-//  CareerCraft
-//
-//  Created by attaporn on 5/2/24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -12,88 +5,100 @@ struct AddJobView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
-            
+    
     let workStyles: [WorkStyle] = [.onsite, .online, .hybrid]
     let workTimes: [WorkTime] = [.flexible, .fixed]
     
+    @Binding var myJob: Job?
     
-    @Binding  var companyName: String
-    @Binding  var departmentName: String
-    @Binding  var location: String
-    @Binding  var minSalary: String
-    @Binding  var maxSalary: String
-    @Binding  var workStyleIndex: Int
-    @Binding  var workTimeIndex: Int
-    @Binding  var hasbonusFrequency: Bool
-    @Binding  var hasSocialSecurity: Bool
-    @Binding  var hasProvidentFund: Bool
-    @Binding  var hasEquipment: Bool
-    
-    func resetData() {
-        companyName = ""
-        departmentName = ""
-        location = ""
-        minSalary = ""
-        maxSalary = ""
-        workStyleIndex = 4
-        workTimeIndex = 4
-        hasbonusFrequency = false
-        hasSocialSecurity = false
-        hasProvidentFund = false
-        hasEquipment = false
-    }
-    
+    @State private var company: String = ""
+    @State private var department: String = ""
+    @State private var minSalary: String = ""
+    @State private var maxSalary: String = ""
+    @State private var location: String = ""
+    @State private var workStyleIndex: Int = 0
+    @State private var workTimeIndex: Int = 0
+    @State private var hasbonusFrequency: Bool = false
+    @State private var hasSocialSecurity: Bool = false
+    @State private var hasProvidentFund: Bool = false
+    @State private var hasEquipment: Bool = false
+
     private func addItem() {
-        withAnimation {
-            modelContext.insert(Job(
-                company: self.companyName,
-                department: self.departmentName,
-                salaryRange: self.minSalary,
-                location: self.location,
-                workStyle: self.workStyleIndex < 3 ? self.workStyles[self.workStyleIndex] : nil,
-                workTime: self.workTimeIndex < 2 ? self.workTimes[self.workTimeIndex] : nil,
-                hasbonusFrequency: self.hasbonusFrequency,
-                hasSocialSecurity: self.hasSocialSecurity,
-                hasProvidentFund: self.hasProvidentFund,
-                hasEquipment:  self.hasEquipment))
-        }
-    }
-
-
-    var body: some View {
+        let newJob = Job(
+            company: company,
+            department: department,
+            minSalary: minSalary,
+            maxSalary: maxSalary,
+            location: location,
+            workStyleIndex: workStyleIndex,
+            workTimeIndex: workTimeIndex,
+            hasbonusFrequency: hasbonusFrequency,
+            hasSocialSecurity: hasSocialSecurity,
+            hasProvidentFund: hasProvidentFund,
+            hasEquipment: hasEquipment
+        )
         
-        VStack { // open-vstack
+        withAnimation {
+            modelContext.insert(newJob)
+        }
+        
+    }
+    
+    private func updateItem(_ item: Job) {
+        withAnimation {
+            myJob?.company = company
+            myJob?.department = department
+            myJob?.location = location
+            myJob?.minSalary = minSalary
+            myJob?.maxSalary = maxSalary
+            myJob?.workStyleIndex = workStyleIndex
+            myJob?.workTimeIndex = workTimeIndex
+            myJob?.hasProvidentFund = hasProvidentFund
+            myJob?.hasbonusFrequency = hasbonusFrequency
+            myJob?.hasSocialSecurity = hasSocialSecurity
+            myJob?.hasEquipment = hasEquipment
+        }
+        
+        myJob = nil
+    }
+    
+    
+    var body: some View { // open-view
+        VStack(alignment: .leading){ // open-vstack
             
-            HStack { // open-hstaack
-                
+            HStack { // open-hstack
                 Button(action: {
                     dismiss()
-                    resetData()
                 }) {
-                    Text("Back")
+                    Text("Cancel")
                 }
                 Spacer()
                 Button(action: {
-                    addItem()
-                    resetData()
                     dismiss()
+
+                    if myJob != nil {
+                        updateItem(myJob!)
+                    } else {
+                        addItem()
+                    }
+                    
                 }) {
                     Text("Save")
                 }
-                
+                .disabled(self.company == "")
             } // close-hstack
-            .padding(.all)
+            .padding()
             
-            ScrollView { // open-scrollview
+            
+            ScrollView{
                 
-                VStack(alignment: .leading, spacing: 0.0) { // open-vstack-2
-                    
-                    // **** Company Name ****
+                VStack(alignment: .leading){ // open-vstack
+                    // **** company-name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Company Name")
                             .font(.headline)
                         HStack {
-                            CustomTextField(text: $companyName, placeholder: "Enter company name")
+                            CustomTextField(text: $company, placeholder: "Enter company name")
                         }
                     }
                     .padding()
@@ -103,13 +108,12 @@ struct AddJobView: View {
                         Text("Department Name")
                             .font(.headline)
                         HStack {
-                            CustomTextField(text: $departmentName, placeholder: "Enter department name")
+                            CustomTextField(text: $department, placeholder: "Enter department name")
                         }
                     }
                     .padding()
                     
-                    
-                    // **** Location Name ****
+                    // **** Department Name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Location")
                             .font(.headline)
@@ -119,16 +123,14 @@ struct AddJobView: View {
                     }
                     .padding()
                     
-
-                    
                     // **** Salary Range ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Salary Range")
                             .font(.headline)
                         
                         HStack {
-                            NumberTextField(placeholder: "Min range", value: $minSalary)
-                            NumberTextField(placeholder: "Min range", value: $minSalary)
+                            NumberTextField(text: $minSalary, placeholder: "Min range")
+                            NumberTextField(text: $maxSalary, placeholder: "Min range")
                         }
                     }
                     .padding()
@@ -142,16 +144,15 @@ struct AddJobView: View {
                             Button(action: {
                                 workTimeIndex = 3
                             }) {
-                                if workTimeIndex < 3 {
+                                if workTimeIndex < 3 && workTimeIndex != -1  {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
                             }
                         }
-                        
                         Picker(selection: $workTimeIndex, label: Text("")) {
-                            ForEach(0 ..< 3) {
-                                Text(self.workStyles[$0].rawValue)
+                            ForEach(0 ..< 2) {
+                                Text(self.workTimes[$0].rawValue)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
@@ -165,9 +166,9 @@ struct AddJobView: View {
                                 .font(.headline)
                             Spacer()
                             Button(action: {
-                                workStyleIndex = 3
+                                workStyleIndex = -1
                             }) {
-                                if workStyleIndex < 3 {
+                                if workStyleIndex < 3 && workStyleIndex != -1 {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
@@ -184,7 +185,7 @@ struct AddJobView: View {
                     .padding()
                     
                     
-                    // **** warefare ****
+                    // **** welfare ****
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Welfare")
                             .font(.headline)
@@ -196,17 +197,49 @@ struct AddJobView: View {
                             .toggleStyle(CheckboxToggleStyle())
                         Toggle("Equipment fund", isOn: $hasEquipment)
                             .toggleStyle(CheckboxToggleStyle())
-                           
                     }
                     .padding()
                     
-                    Spacer()
-                }
+                    
+                    
+                } // close-vstack
+                
+            }
+
+            Spacer()
+            
+            
+        } // close-vstack
+        .onAppear {
+            if let job = myJob {
+                company = job.company
+                department = job.department ?? ""
+                location = job.location ?? ""
+                minSalary = job.minSalary ?? ""
+                maxSalary = job.maxSalary ?? ""
+                workStyleIndex = job.workStyleIndex ?? -1
+                workTimeIndex = job.workTimeIndex ?? -1
+                hasbonusFrequency = job.hasbonusFrequency
+                hasSocialSecurity = job.hasSocialSecurity
+                hasProvidentFund = job.hasProvidentFund
+                hasEquipment = job.hasEquipment
+            } else {
+                company = ""
+                department = ""
+                minSalary = ""
+                maxSalary = ""
+                location = ""
+                workStyleIndex = -1
+                workTimeIndex = -1
+                hasbonusFrequency = false
+                hasSocialSecurity = false
+                hasProvidentFund = false
+                hasEquipment = false
             }
         }
-    }
-    
+    } // close-view
 }
+
 
 struct CustomTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
@@ -243,11 +276,11 @@ struct CustomTextField: View {
     }
 }
 
+
 struct NumberTextField: View {
     
-    @State private var text: String = ""
+    @Binding var text: String
     var placeholder: String
-    @Binding var value: String
     
     var body: some View {
         HStack {
@@ -269,7 +302,6 @@ struct NumberTextField: View {
     }
 }
 
-
 struct CheckboxToggleStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 20.0) {
@@ -283,7 +315,3 @@ struct CheckboxToggleStyle: ToggleStyle {
         }
     }
 }
-
-//#Preview {
-//    AddJobView()
-//}

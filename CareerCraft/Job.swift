@@ -13,42 +13,45 @@ final class Job {
     
     var company: String
     var department: String?
-    var salaryRange: String?
     var location: String?
-    
-    @Transient var workStyle: WorkStyle {
-        get {
-            return WorkStyle(rawValue: String(workStyleValue)) ?? .onsite }
-        set {
-            self.workStyleValue = String(newValue.rawValue)
-        }
-    }
-    @Attribute(originalName: "workStyle") var workStyleValue: WorkStyle.RawValue
-    
-    @Transient var workTime: WorkTime {
-        get {
-            return WorkTime(rawValue: String(workTimeValue)) ?? .fixed }
-        set {
-            self.workTimeValue = String(newValue.rawValue)
-        }
-    }
-    @Attribute(originalName: "workTime") var workTimeValue: WorkTime.RawValue
-    
-//    var welfare: Welfare?
+    var minSalary: String?
+    var maxSalary: String?
+    var workStyleIndex: Int?
+    var workTimeIndex: Int?
     
     var hasbonusFrequency: Bool
     var hasSocialSecurity: Bool
     var hasProvidentFund: Bool
     var hasEquipment: Bool
-
+    
+//    @Transient var workStyle: WorkStyle {
+//        get {
+//            return WorkStyle(rawValue: String(workStyleValue)) ?? .onsite }
+//        set {
+//            self.workStyleValue = String(newValue.rawValue)
+//        }
+//    }
+//    @Attribute(originalName: "workStyle") var workStyleValue: WorkStyle.RawValue
+//    
+//    @Transient var workTime: WorkTime {
+//        get {
+//            return WorkTime(rawValue: String(workTimeValue)) ?? .fixed }
+//        set {
+//            self.workTimeValue = String(newValue.rawValue)
+//        }
+//    }
+//    @Attribute(originalName: "workTime") var workTimeValue: WorkTime.RawValue
+    
+//    var welfare: Welfare?
     
     
     init(company: String,
          department: String?,
-         salaryRange: String?,
+         minSalary: String?,
+         maxSalary: String?,
          location: String?,
-         workStyle: WorkStyle?,
-         workTime: WorkTime?,
+         workStyleIndex: Int?,
+         workTimeIndex: Int?,
          hasbonusFrequency: Bool?,
          hasSocialSecurity: Bool?,
          hasProvidentFund: Bool?,
@@ -56,15 +59,16 @@ final class Job {
     ) {
         
         self.company = company
-         self.department = department ?? ""
-         self.salaryRange = salaryRange ?? ""
-         self.location = location ?? ""
-         self.workStyleValue = workStyle?.rawValue ?? ""
-         self.workTimeValue = workTime?.rawValue ?? ""
-         self.hasbonusFrequency = hasbonusFrequency ?? false
-         self.hasSocialSecurity = hasSocialSecurity ?? false
-         self.hasProvidentFund = hasProvidentFund ?? false
-         self.hasEquipment = hasEquipment ?? false
+        self.department = department ?? ""
+        self.minSalary = minSalary ?? ""
+        self.maxSalary = minSalary ?? ""
+        self.location = location ?? ""
+        self.workStyleIndex = workStyleIndex ?? -1
+        self.workTimeIndex = workStyleIndex ?? -1
+        self.hasbonusFrequency = hasbonusFrequency ?? false
+        self.hasSocialSecurity = hasSocialSecurity ?? false
+        self.hasProvidentFund = hasProvidentFund ?? false
+        self.hasEquipment = hasEquipment ?? false
     }
 }
 

@@ -40,9 +40,8 @@ struct JobItemView: View {
         .background(Color.white)
         .border(Color("bg-grey"))
         .cornerRadius(10)
-        .accessibility(label: Text("\(jobItem.company), \(jobItem.department ?? "")")) // Accessibility label
-
-    
+        .accessibility(label: Text("\(jobItem.company), \(jobItem.department ?? "")")) 
+        
         
     }
         
@@ -50,6 +49,6 @@ struct JobItemView: View {
 }
     
 
-#Preview {
-    JobItemView(jobItem: Job(company: "Tech Solutions Inc.", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true))
-}
+//#Preview {
+//    JobItemView(jobItem: Job(company: "Tech Solutions Inc.", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true))
+//}

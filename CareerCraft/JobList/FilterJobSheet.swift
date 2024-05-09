@@ -148,19 +148,19 @@ struct FilterJobSheet: View {
                     .padding()
                     
                     // Welfare
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Welfare")
-                            .font(.headline)
-                        Toggle("Bonus", isOn: $filterHasbonusFrequency)
-                            .toggleStyle(CheckboxToggleStyle())
-                        Toggle("Social security insurance", isOn: $filterHasSocialSecurity)
-                            .toggleStyle(CheckboxToggleStyle())
-                        Toggle("Provident fund", isOn: $filterHasProvidentFund)
-                            .toggleStyle(CheckboxToggleStyle())
-                        Toggle("Equipment fund", isOn: $filterHasEquipment)
-                            .toggleStyle(CheckboxToggleStyle())
-                    }
-                    .padding()
+//                    VStack(alignment: .leading, spacing: 20) {
+//                        Text("Welfare")
+//                            .font(.headline)
+//                        Toggle("Bonus", isOn: $filterHasbonusFrequency)
+//                            .toggleStyle(CheckboxToggleStyle())
+//                        Toggle("Social security insurance", isOn: $filterHasSocialSecurity)
+//                            .toggleStyle(CheckboxToggleStyle())
+//                        Toggle("Provident fund", isOn: $filterHasProvidentFund)
+//                            .toggleStyle(CheckboxToggleStyle())
+//                        Toggle("Equipment fund", isOn: $filterHasEquipment)
+//                            .toggleStyle(CheckboxToggleStyle())
+//                    }
+//                    .padding()
                     
                 }
             }
