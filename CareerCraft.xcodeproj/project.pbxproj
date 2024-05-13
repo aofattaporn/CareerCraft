@@ -12,6 +12,8 @@
 		EE8115122BCFB3D600AAC34C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115112BCFB3D600AAC34C /* Item.swift */; };
 		EE8115142BCFB3DA00AAC34C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115132BCFB3DA00AAC34C /* Assets.xcassets */; };
 		EE8115172BCFB3DA00AAC34C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */; };
+		EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */; };
+		EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151F2BCFD90200AAC34C /* CompareJobView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		EE8115112BCFB3D600AAC34C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EE8115132BCFB3DA00AAC34C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowJobListView.swift; sourceTree = "<group>"; };
+		EE81151F2BCFD90200AAC34C /* CompareJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareJobView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,11 +57,13 @@
 		EE81150C2BCFB3D600AAC34C /* CareerCraft */ = {
 			isa = PBXGroup;
 			children = (
+				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
 				EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */,
 				EE81150F2BCFB3D600AAC34C /* ContentView.swift */,
 				EE8115112BCFB3D600AAC34C /* Item.swift */,
 				EE8115132BCFB3DA00AAC34C /* Assets.xcassets */,
 				EE8115152BCFB3DA00AAC34C /* Preview Content */,
+				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
 			);
 			path = CareerCraft;
 			sourceTree = "<group>";
@@ -140,7 +146,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */,
 				EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */,
+				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
 				EE8115122BCFB3D600AAC34C /* Item.swift in Sources */,
 				EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */,
 			);
