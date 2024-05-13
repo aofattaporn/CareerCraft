@@ -10,9 +10,10 @@ import SwiftData
 
 @main
 struct CareerCraftApp: App {
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Job.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,7 +26,7 @@ struct CareerCraftApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView().preferredColorScheme(.light)
         }
         .modelContainer(sharedModelContainer)
     }

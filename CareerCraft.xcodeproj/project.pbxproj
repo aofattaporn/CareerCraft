@@ -7,24 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE697A452BF1981800425D0F /* JobConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE697A442BF1981800425D0F /* JobConst.swift */; };
+		EE697A492BF1CE0100425D0F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE697A482BF1CE0100425D0F /* CustomTextField.swift */; };
+		EE697A4B2BF1CE4A00425D0F /* NumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE697A4A2BF1CE4A00425D0F /* NumberTextField.swift */; };
+		EE697A4D2BF1CE9D00425D0F /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE697A4C2BF1CE9D00425D0F /* CheckboxToggleStyle.swift */; };
 		EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */; };
-		EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150F2BCFB3D600AAC34C /* ContentView.swift */; };
-		EE8115122BCFB3D600AAC34C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115112BCFB3D600AAC34C /* Item.swift */; };
+		EE8115102BCFB3D600AAC34C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81150F2BCFB3D600AAC34C /* MainView.swift */; };
 		EE8115142BCFB3DA00AAC34C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115132BCFB3DA00AAC34C /* Assets.xcassets */; };
 		EE8115172BCFB3DA00AAC34C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */; };
 		EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */; };
 		EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81151F2BCFD90200AAC34C /* CompareJobView.swift */; };
+		EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115212BCFEE7B00AAC34C /* Job.swift */; };
+		EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115232BD0368900AAC34C /* SelectCompany.swift */; };
+		EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8115252BD03FAF00AAC34C /* SelectLabels.swift */; };
+		EEDB550E2BE3D0DC009F667B /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB550D2BE3D0DC009F667B /* AddJobView.swift */; };
+		EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE016D62BD17754000D62B1 /* JobItemView.swift */; };
+		EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE697A442BF1981800425D0F /* JobConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobConst.swift; sourceTree = "<group>"; };
+		EE697A482BF1CE0100425D0F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		EE697A4A2BF1CE4A00425D0F /* NumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTextField.swift; sourceTree = "<group>"; };
+		EE697A4C2BF1CE9D00425D0F /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		EE81150A2BCFB3D600AAC34C /* CareerCraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CareerCraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerCraftApp.swift; sourceTree = "<group>"; };
-		EE81150F2BCFB3D600AAC34C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		EE8115112BCFB3D600AAC34C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		EE81150F2BCFB3D600AAC34C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		EE8115132BCFB3DA00AAC34C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowJobListView.swift; sourceTree = "<group>"; };
 		EE81151F2BCFD90200AAC34C /* CompareJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareJobView.swift; sourceTree = "<group>"; };
+		EE8115212BCFEE7B00AAC34C /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		EE8115232BD0368900AAC34C /* SelectCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompany.swift; sourceTree = "<group>"; };
+		EE8115252BD03FAF00AAC34C /* SelectLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabels.swift; sourceTree = "<group>"; };
+		EEDB550D2BE3D0DC009F667B /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
+		EEE016D62BD17754000D62B1 /* JobItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItemView.swift; sourceTree = "<group>"; };
+		EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterJobSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +56,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE697A472BF1CDDA00425D0F /* Comp */ = {
+			isa = PBXGroup;
+			children = (
+				EE697A482BF1CE0100425D0F /* CustomTextField.swift */,
+				EE697A4A2BF1CE4A00425D0F /* NumberTextField.swift */,
+				EE697A4C2BF1CE9D00425D0F /* CheckboxToggleStyle.swift */,
+			);
+			name = Comp;
+			sourceTree = "<group>";
+		};
 		EE8115012BCFB3D600AAC34C = {
 			isa = PBXGroup;
 			children = (
@@ -57,13 +85,14 @@
 		EE81150C2BCFB3D600AAC34C /* CareerCraft */ = {
 			isa = PBXGroup;
 			children = (
-				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
+				EEF474772BD24B20007AC810 /* CompareJob */,
+				EEF474792BD24B67007AC810 /* JobList */,
 				EE81150D2BCFB3D600AAC34C /* CareerCraftApp.swift */,
-				EE81150F2BCFB3D600AAC34C /* ContentView.swift */,
-				EE8115112BCFB3D600AAC34C /* Item.swift */,
+				EE81150F2BCFB3D600AAC34C /* MainView.swift */,
+				EE697A442BF1981800425D0F /* JobConst.swift */,
 				EE8115132BCFB3DA00AAC34C /* Assets.xcassets */,
 				EE8115152BCFB3DA00AAC34C /* Preview Content */,
-				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
+				EE8115212BCFEE7B00AAC34C /* Job.swift */,
 			);
 			path = CareerCraft;
 			sourceTree = "<group>";
@@ -74,6 +103,28 @@
 				EE8115162BCFB3DA00AAC34C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EEF474772BD24B20007AC810 /* CompareJob */ = {
+			isa = PBXGroup;
+			children = (
+				EE8115252BD03FAF00AAC34C /* SelectLabels.swift */,
+				EE8115232BD0368900AAC34C /* SelectCompany.swift */,
+				EE81151F2BCFD90200AAC34C /* CompareJobView.swift */,
+			);
+			path = CompareJob;
+			sourceTree = "<group>";
+		};
+		EEF474792BD24B67007AC810 /* JobList */ = {
+			isa = PBXGroup;
+			children = (
+				EE697A472BF1CDDA00425D0F /* Comp */,
+				EEE016D62BD17754000D62B1 /* JobItemView.swift */,
+				EE81151D2BCFD8BE00AAC34C /* ShowJobListView.swift */,
+				EEF4747A2BD26A72007AC810 /* FilterJobSheet.swift */,
+				EEDB550D2BE3D0DC009F667B /* AddJobView.swift */,
+			);
+			path = JobList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,10 +197,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEDB550E2BE3D0DC009F667B /* AddJobView.swift in Sources */,
+				EE8115262BD03FAF00AAC34C /* SelectLabels.swift in Sources */,
 				EE81151E2BCFD8BE00AAC34C /* ShowJobListView.swift in Sources */,
-				EE8115102BCFB3D600AAC34C /* ContentView.swift in Sources */,
+				EE697A452BF1981800425D0F /* JobConst.swift in Sources */,
+				EE8115222BCFEE7B00AAC34C /* Job.swift in Sources */,
+				EE8115102BCFB3D600AAC34C /* MainView.swift in Sources */,
+				EE697A4D2BF1CE9D00425D0F /* CheckboxToggleStyle.swift in Sources */,
+				EE8115242BD0368900AAC34C /* SelectCompany.swift in Sources */,
+				EEE016D72BD17754000D62B1 /* JobItemView.swift in Sources */,
+				EE697A492BF1CE0100425D0F /* CustomTextField.swift in Sources */,
+				EEF4747B2BD26A72007AC810 /* FilterJobSheet.swift in Sources */,
+				EE697A4B2BF1CE4A00425D0F /* NumberTextField.swift in Sources */,
 				EE8115202BCFD90200AAC34C /* CompareJobView.swift in Sources */,
-				EE8115122BCFB3D600AAC34C /* Item.swift in Sources */,
 				EE81150E2BCFB3D600AAC34C /* CareerCraftApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
