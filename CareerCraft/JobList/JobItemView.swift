@@ -51,11 +51,34 @@ struct JobItemView: View {
                         .font(.callout)
                         .foregroundColor(Color("primary-app"))
                     Spacer()
+                    HStack{
+                        if(self.jobItem.appliedState == .notApplied){
+                            Image(systemName: "circle")
+                                .foregroundStyle(.black)
+                            Text("Not Applied")
+                                .font(.callout)
+                                .foregroundStyle(.black)
+                        } else if (self.jobItem.appliedState == .applied) {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundStyle(.yellow)
+                            Text("Applied")
+                                .font(.callout)
+                                .foregroundStyle(.yellow)
+                        } else {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                            Text("Passed")
+                                .font(.callout)
+                                .foregroundStyle(.green)
+                        }
+                    }
                 } // close-vstack
                 .padding()
                 .background(Color.white)
                 
+
                 Spacer(minLength: 18)
+                
             }
             
         }  // close-hstack-1

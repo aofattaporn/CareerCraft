@@ -21,8 +21,25 @@ enum WorkTime: String{
     case unknown = "unknown"
 }
 
+enum AppliedState: String{
+    case notApplied  = "notApplied"
+    case applied  =   "applied"
+    case passed = "passed"
+    case unknown = "unknown"
+}
+
+
 @Model
 final class Job {
+    
+    @Transient var appliedState: AppliedState {
+        get {
+            return AppliedState(rawValue: String(appliedStateValue)) ?? .notApplied }
+        set {
+            self.appliedStateValue = String(newValue.rawValue)
+        }
+    }
+    
     
     @Transient var workStyle: WorkStyle {
         get {
@@ -49,6 +66,9 @@ final class Job {
     
     @Attribute(originalName: "workStyle") var workStyleValue: WorkStyle.RawValue
     @Attribute(originalName: "workTime") var workTimeValue: WorkTime.RawValue
+    
+    @Attribute(originalName: "appliedState") var appliedStateValue: AppliedState.RawValue
+
 
     var hasbonusFrequency: Bool
     var hasSocialSecurity: Bool
@@ -67,6 +87,7 @@ final class Job {
          
          workStyleValue: WorkStyle,
          workTimeValue: WorkTime,
+         appliedStateValue: AppliedState,
 
          hasbonusFrequency: Bool,
          hasSocialSecurity: Bool,
@@ -86,6 +107,8 @@ final class Job {
         
         self.workStyleValue = workStyleValue.rawValue
         self.workTimeValue = workTimeValue.rawValue
+        
+        self.appliedStateValue = appliedStateValue.rawValue
         
         self.hasbonusFrequency = hasbonusFrequency
         self.hasSocialSecurity = hasSocialSecurity

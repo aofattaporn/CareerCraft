@@ -37,6 +37,8 @@ struct ShowJobListView: View {
     @State private var filterWorkTimeIndex: Int = -1
     @State private var filterMinSalary: String = ""
     @State private var filterMaxSalary: String = ""
+    @State private var filterApplied: AppliedState = .unknown
+
     
     @State var showAddItemView = false
         
@@ -45,7 +47,8 @@ struct ShowJobListView: View {
             filterWorkStyleIndex == -1 &&
             filterWorkTimeIndex == -1 &&
             filterMinSalary == "" &&
-            filterMaxSalary == ""
+            filterMaxSalary == "" &&
+            filterApplied == .unknown
         ) {
             return false
         } else {
@@ -61,6 +64,10 @@ struct ShowJobListView: View {
         var filterJob = jobs
         
         if(checkFilterDirty()) {
+            
+            if filterApplied != AppliedState.unknown {
+                filterJob = filterJob.filter { $0.appliedState == filterApplied }
+            }
             
             if filterWorkStyleIndex != -1 {
                 filterJob = filterJob.filter { $0.workStyle == Constants.Job.WorkStyle[filterWorkStyleIndex] }
@@ -120,6 +127,7 @@ struct ShowJobListView: View {
                 .sheet(isPresented: $showFilterJobSheet) {
                     if #available(iOS 16.0, *) {
                         FilterJobSheet(
+                            filterApplied: $filterApplied,
                             filterWorkStyleIndex: $filterWorkStyleIndex,
                             filterWorkTimeIndex: $filterWorkTimeIndex,
                             filterMinSalary: $filterMinSalary,

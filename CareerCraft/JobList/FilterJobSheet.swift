@@ -12,11 +12,13 @@ struct FilterJobSheet: View {
     
     @Environment(\.dismiss) var dismiss
 
+    @Binding var filterApplied: AppliedState
     @Binding var filterWorkStyleIndex: Int
     @Binding var filterWorkTimeIndex: Int
     @Binding var filterMinSalary: String
     @Binding var filterMaxSalary: String
     
+    @State var tempApplied: AppliedState = .unknown
     @State var tempWorkStyleIndex: Int = -1
     @State var tempWorkTimeIndex: Int = -1
     @State var tempMinSalary: String = ""
@@ -27,6 +29,7 @@ struct FilterJobSheet: View {
         self.tempWorkTimeIndex = -1
         self.tempMinSalary = ""
         self.tempMaxSalary = ""
+        self.tempApplied = .unknown
     }
     
     private func applyFilter() {
@@ -34,6 +37,7 @@ struct FilterJobSheet: View {
         filterWorkTimeIndex = tempWorkTimeIndex
         filterMinSalary = tempMinSalary
         filterMaxSalary = tempMaxSalary
+        filterApplied = tempApplied
     }
     
     private func checkFilterDirty() ->Bool {
@@ -41,7 +45,8 @@ struct FilterJobSheet: View {
             filterWorkStyleIndex != tempWorkStyleIndex ||
             filterWorkTimeIndex != tempWorkTimeIndex ||
             filterMinSalary != tempMinSalary ||
-            filterMaxSalary != tempMaxSalary
+            filterMaxSalary != tempMaxSalary ||
+            filterApplied != tempApplied
         ) {
             return true
         } else {
@@ -69,6 +74,67 @@ struct FilterJobSheet: View {
             ScrollView { // open-scrollview
                 
                 VStack(alignment: .leading, spacing: 0.0) { // open-view
+                    
+                    VStack(){
+                        HStack {
+                            Text("Applied Status")
+                                .font(.headline)
+                            Spacer()
+                            Button(action: {
+                                tempApplied = .unknown
+                            }) {
+                                if tempApplied != .unknown  {
+                                    Text("Clear")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                        }
+                        HStack {
+                            
+                            Spacer()
+                            // not applied
+                            Button(action: {
+                                tempApplied = .notApplied
+                            }) {
+                                VStack{
+                                    Image(systemName: "circle")
+                                    Text("Not Applied")
+                                }
+                                .foregroundColor(tempApplied == .notApplied ? .black : .gray )
+
+                            }
+                            
+                            Spacer()
+                            // applied
+                            Button(action: {
+                                tempApplied = .applied
+                            }) {
+                                VStack{
+                                    Image(systemName: "checkmark.circle")
+                                    Text("Applied")
+                                }
+                                .foregroundColor(tempApplied == .applied ? .yellow : .gray )
+
+                            }
+                            
+                            Spacer()
+                            // passed
+                            Button(action: {
+                                tempApplied = .passed
+                            }) {
+                                VStack{
+                                    Image(systemName: "checkmark.circle.fill")
+                                    Text("Passed")
+                                }
+                                .foregroundColor(tempApplied == .passed ?  .green : .gray )
+                            }
+                            Spacer()
+                        }
+                        .padding()
+                    }
+                    .padding()
+                    
+
                     
                     // **** Salary Range ****
                     VStack(alignment: .leading, spacing: 5) {
@@ -185,6 +251,7 @@ struct FilterJobSheet: View {
             tempWorkStyleIndex = filterWorkStyleIndex
             tempMaxSalary = filterMaxSalary
             tempMinSalary = filterMinSalary
+            tempApplied = filterApplied
         }
         
         Spacer()

@@ -19,6 +19,8 @@ struct AddJobView: View {
     @State private var workStyleIndex: Int = -1
     @State private var workTimeIndex: Int = -1
     
+    @State private var applyState: AppliedState = .notApplied
+    
     @State private var hasbonusFrequency: Bool = false
     @State private var hasSocialSecurity: Bool = false
     @State private var hasProvidentFund: Bool = false
@@ -37,7 +39,9 @@ struct AddJobView: View {
             maxSalary: Int(maxSalary),
             
             workStyleValue: (workStyleIndex == -1 ? WorkStyle.unknown : Constants.Job.WorkStyle[workStyleIndex]),
-            workTimeValue:  (workTimeIndex == -1 ? WorkTime.unknown : Constants.Job.workTimes[workTimeIndex]),
+            workTimeValue:  (workTimeIndex == -1 ? WorkTime.unknown : Constants.Job.workTimes[workTimeIndex]), 
+            
+            appliedStateValue: applyState,
         
             hasbonusFrequency: hasbonusFrequency,
             hasSocialSecurity: hasSocialSecurity,
@@ -64,6 +68,8 @@ struct AddJobView: View {
             myJob?.workStyle = workStyleIndex == -1 ? WorkStyle.unknown : Constants.Job.WorkStyle[workStyleIndex]
             myJob?.workTime = workTimeIndex == -1 ? WorkTime.unknown :
             Constants.Job.workTimes[workTimeIndex]
+            
+            myJob?.appliedState = applyState
             
             myJob?.hasProvidentFund = hasProvidentFund
             myJob?.hasbonusFrequency = hasbonusFrequency
@@ -171,6 +177,50 @@ struct AddJobView: View {
                             })
                         }
                     }
+                    
+                    HStack {
+                        
+                        Spacer()
+                        // not applied
+                        Button(action: {
+                            applyState = .notApplied
+                        }) {
+                            VStack{
+                                Image(systemName: "circle")
+                                Text("Not Applied")
+                            }
+                            .foregroundColor(applyState == .notApplied ? .black : .gray )
+
+                        }
+                        
+                        Spacer()
+                        // applied
+                        Button(action: {
+                            applyState = .applied
+                        }) {
+                            VStack{
+                                Image(systemName: "checkmark.circle")
+                                Text("Applied")
+                            }
+                            .foregroundColor(applyState == .applied ? .yellow : .gray )
+
+                        }
+                        
+                        Spacer()
+                        // passed
+                        Button(action: {
+                            applyState = .passed
+                        }) {
+                            VStack{
+                                Image(systemName: "checkmark.circle.fill")
+                                Text("Passed")
+                            }
+                            .foregroundColor(applyState == .passed ?  .green : .gray )
+                        }
+                        Spacer()
+                    }
+                    .padding()
+
 
                     
                     // **** company-name ****
@@ -307,6 +357,7 @@ struct AddJobView: View {
                 } else {
                     workTimeIndex = -1
                 }
+                applyState = job.appliedState
                 hasbonusFrequency = job.hasbonusFrequency
                 hasSocialSecurity = job.hasSocialSecurity
                 hasProvidentFund = job.hasProvidentFund
@@ -321,6 +372,7 @@ struct AddJobView: View {
                 location = ""
                 workStyleIndex = -1
                 workTimeIndex = -1
+                applyState = .notApplied
                 hasbonusFrequency = false
                 hasSocialSecurity = false
                 hasProvidentFund = false
