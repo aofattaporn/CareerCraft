@@ -54,11 +54,34 @@ struct CompareJobView: View {
         }
         switch key {
         case "company": return company.company
-        case "department": return company.department ?? "-"
-        case "salaryRange": return company.minSalary  ?? "-"
+        case "department": return company.department
+        case "salaryRange":
+            if (company.minSalary != nil &&  company.maxSalary != nil) {
+                let max = String(company.maxSalary ?? 0)
+                let min = String(company.minSalary ?? 0)
+                return "\(min) - \(max)"
+            } 
+            
+            else if (company.maxSalary != nil) {
+                let max = String(company.maxSalary ?? 0)
+                return "(max) \(max)"
+            } 
+            
+            else if (company.minSalary != nil) {
+                let min = String(company.minSalary ?? 0)
+                return "(min) \(min)"
+            } 
+            
+            else {
+                return "-"
+            }
         case "location": return company.location ?? "-"
-        case "workTimeIndex": return  (company.workTimeIndex != -1) ? workTimes[company.workTimeIndex!].rawValue : "-"
-        case "workStyleIndex": return (company.workStyleIndex != -1) ? workStyles[company.workStyleIndex!].rawValue : "-"
+        case "workTimeIndex":
+            if(company.workTime.rawValue == "unknown") { return "-" }
+            return company.workTime.rawValue
+        case "workStyleIndex": 
+            if(company.workStyle.rawValue == "unknown") { return "-" }
+            return company.workStyle.rawValue
         case "hasbonusFrequency": return company.hasbonusFrequency ? "Bonus" : "No Bonus"
         case "hasSocialSecurity": return company.hasSocialSecurity ? "SocialSecurity" : "No SocialSecurity"
         case "hasProvidentFund": return company.hasProvidentFund ? "ProvidentFund" : "No ProvidentFund"
@@ -80,7 +103,7 @@ struct CompareJobView: View {
                         Text("Select Labels")
                             .padding(.all)
                             .cornerRadius(10)
-                            .foregroundColor(Color("secondary"))
+                            .foregroundColor(Color("secondary-app"))
                     }.sheet(isPresented: $showSelectLabels) {
                         if #available(iOS 16.0, *) {
                             SelectLabels(
@@ -113,7 +136,7 @@ struct CompareJobView: View {
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
-                            .background(company1 != nil ? Color("secondary") : Color("bg-grey"))
+                            .background(company1 != nil ? Color("secondary-app") : Color("bg-grey"))
                             .foregroundColor(company1 != nil ? .white : .gray)
                             .cornerRadius(10)
                         }
@@ -133,7 +156,7 @@ struct CompareJobView: View {
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
-                            .background(company1 != nil ? Color("secondary") : Color("bg-grey"))
+                            .background(company1 != nil ? Color("secondary-app") : Color("bg-grey"))
                             .foregroundColor(company1 != nil ? .white : .gray)
                             .cornerRadius(10)
                         }

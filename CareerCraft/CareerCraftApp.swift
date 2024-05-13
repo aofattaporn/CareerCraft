@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct CareerCraftApp: App {
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Job.self,

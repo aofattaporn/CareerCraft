@@ -25,43 +25,80 @@ struct ShowJobListView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Query private var jobs: [Job]
+    @State private var selectedItem: Job?
     
     @State private var searchJob: String = ""
     @State private var showFilterJobSheet = false
     
     @State private var showDeleteSheet = false
-    @State private var selectedItem: Job?
     
     @State var showAlert = false
     @State var showAddItemView = false
-    
-    @State  var filterMinSalary: String = ""
-    @State  var filterMaxSalary: String = ""
-
-    @State  var filterHasbonusFrequency: Bool = false
-    @State  var filterHasSocialSecurity: Bool = false
-    @State  var filterHasProvidentFund: Bool = false
-    @State  var filterHasEquipment: Bool = false
     
     @State private var companyName: String = ""
     @State private var departmentName: String = ""
     @State private var location: String = ""
     @State private var minSalary: String = ""
     @State private var maxSalary: String = ""
-    @State private var workStyleIndex: Int = 4
-    @State private var workTimeIndex: Int = 4
+    @State private var workStyleIndex: Int = -1
+    @State private var workTimeIndex: Int = -1
     @State private var hasbonusFrequency: Bool = false
     @State private var hasSocialSecurity: Bool = false
     @State private var hasProvidentFund: Bool = false
     @State private var hasEquipment: Bool = false
     
+    @State private var filterWorkStyleIndex: Int = -1
+    @State private var filterWorkTimeIndex: Int = -1
+    @State  var filterMinSalary: String = ""
+    @State  var filterMaxSalary: String = ""
+    
     @State private var isEditing: Bool = false
     @State private var isCreating: Bool = true
     
-    var searchResults: [Job] {
-        return searchJob.isEmpty ? jobs : jobs.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
-            $0.department!.lowercased().contains(searchJob.lowercased())
+    @State private var isFilter: Bool = false
+    
+    private func switchSalary() {
+        if let minInt = Int(filterMinSalary), let maxInt = Int(filterMaxSalary)  {
+            if(minInt > maxInt) {
+                let tempMin = minInt
+                minSalary = "\(maxInt)"
+                maxSalary = "\(tempMin)"
+            }
         }
+    }
+    
+    var searchResults: [Job] {
+        
+        // Filter job
+        
+        var filterJob = jobs
+        
+        if(isFilter == true) {
+            
+            if filterWorkStyleIndex != -1 {
+                filterJob = filterJob.filter { $0.workStyle == Constants.Job.WorkStyle[filterWorkStyleIndex] }
+            }
+            
+            if filterWorkTimeIndex != -1 {
+                filterJob = filterJob.filter { $0.workTime == Constants.Job.workTimes[filterWorkTimeIndex] }
+            }
+            
+            switchSalary()
+            
+            if let min = Int(filterMinSalary) {
+                filterJob = filterJob.filter { Int($0.minSalary ?? 0) >= min }
+            }
+            
+            if let max = Int(filterMaxSalary) {
+                filterJob = filterJob.filter { Int($0.maxSalary ?? 0) <= max  }
+            }
+            
+        }
+        
+        return searchJob.isEmpty ? filterJob : filterJob.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
+            $0.department.lowercased().contains(searchJob.lowercased())
+        }
+        
     }
 
     var body: some View {
@@ -84,22 +121,20 @@ struct ShowJobListView: View {
                 }) { // open-filtern-btn
                     Image(systemName: "slider.horizontal.3")
                          .padding()
-                         .foregroundColor(Color("secondary"))
+                         .foregroundColor(Color("secondary-app"))
                          .font(.system(size: 24))
                 } // close-filtern-btn
                 .sheet(isPresented: $showFilterJobSheet) {
                     if #available(iOS 16.0, *) {
                         FilterJobSheet(
-                            filterMinSalary: $filterMinSalary,
-                            filterMaxSalary: $filterMaxSalary,
-                            workStyleIndex:  $workStyleIndex,
-                            workTimeIndex:   $workTimeIndex,
-                            filterHasbonusFrequency: $filterHasbonusFrequency,
-                            filterHasSocialSecurity: $filterHasbonusFrequency,
-                            filterHasProvidentFund:$filterHasbonusFrequency,
-                            filterHasEquipment: $filterHasbonusFrequency
+                            workStyleIndex: $filterWorkStyleIndex,
+                            workTimeIndex: $filterWorkTimeIndex, 
+                            minSalary: $filterMinSalary,
+                            maxSalary: $filterMaxSalary,
+                            
+                            isFilter: $isFilter
                         )
-                            .presentationDetents([.fraction(0.75)])
+                            .presentationDetents([.fraction(0.70)])
                     
                     }
                 }
@@ -113,17 +148,17 @@ struct ShowJobListView: View {
                         ForEach(searchResults) { item in
                                 JobItemView(jobItem: item)
                                 .onTapGesture {
-                                    self.companyName = item.company
-                                    self.departmentName = item.department ?? ""
-                                    self.location = item.location ?? ""
-                                    self.minSalary = item.minSalary ?? ""
-                                    self.maxSalary = item.maxSalary ?? ""
-                                    self.workStyleIndex = 4
-                                    self.workTimeIndex = 4
-                                    self.hasbonusFrequency = item.hasbonusFrequency
-                                    self.hasSocialSecurity = item.hasSocialSecurity
-                                    self.hasProvidentFund = item.hasProvidentFund
-                                    self.hasEquipment = item.hasEquipment
+//                                    self.companyName = item.company
+//                                    self.departmentName = item.department ?? ""
+//                                    self.location = item.location ?? ""
+//                                    self.minSalary = item.minSalary != 0 ? String(item.minSalary ?? 0) : ""
+//                                    self.maxSalary = item.maxSalary != 0 ? String(item.maxSalary ?? 0) : ""
+//                                    self.workStyleIndex = -1
+//                                    self.workTimeIndex = -1
+//                                    self.hasbonusFrequency = item.hasbonusFrequency
+//                                    self.hasSocialSecurity = item.hasSocialSecurity
+//                                    self.hasProvidentFund = item.hasProvidentFund
+//                                    self.hasEquipment = item.hasEquipment
                                     
                                     self.selectedItem = item
                                     self.showAddItemView.toggle()
@@ -162,7 +197,7 @@ struct ShowJobListView: View {
                         }) { // open-flotting-btn
                             Image(systemName: "plus")
                                  .padding()
-                                 .background(Color("primary"))
+                                 .background(Color("primary-app"))
                                  .foregroundColor(.white)
                                  .clipShape(Circle())
                                  .shadow(color: Color.black.opacity(0.3), radius: 3, x: 1, y: 1)

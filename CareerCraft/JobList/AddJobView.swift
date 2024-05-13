@@ -7,25 +7,23 @@ struct AddJobView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
-    let workStyles: [WorkStyle] = [.onsite, .online, .hybrid]
-    let workTimes: [WorkTime] = [.flexible, .fixed]
-    
     @Binding var myJob: Job?
     
     @State private var company: String = ""
     @State private var department: String = ""
+    @State private var location: String = ""
+    
     @State private var minSalary: String = ""
     @State private var maxSalary: String = ""
-    @State private var location: String = ""
-    @State private var workStyleIndex: Int = 0
-    @State private var workTimeIndex: Int = 0
+    
+    @State private var workStyleIndex: Int = -1
+    @State private var workTimeIndex: Int = -1
+    
     @State private var hasbonusFrequency: Bool = false
     @State private var hasSocialSecurity: Bool = false
     @State private var hasProvidentFund: Bool = false
     @State private var hasEquipment: Bool = false
-    
-    @State var sekectedCategory: Category?
-    
+        
     @State var selectedPhoto: PhotosPickerItem?
     @State var selectedPhotoData: Data?
     
@@ -33,11 +31,14 @@ struct AddJobView: View {
         let newJob = Job(
             company: company,
             department: department,
-            minSalary: minSalary,
-            maxSalary: maxSalary,
             location: location,
-            workStyleIndex: workStyleIndex,
-            workTimeIndex: workTimeIndex,
+            
+            minSalary: Int(minSalary),
+            maxSalary: Int(maxSalary),
+            
+            workStyleValue: (workStyleIndex == -1 ? WorkStyle.unknown : Constants.Job.WorkStyle[workStyleIndex]),
+            workTimeValue:  (workTimeIndex == -1 ? WorkTime.unknown : Constants.Job.workTimes[workTimeIndex]),
+        
             hasbonusFrequency: hasbonusFrequency,
             hasSocialSecurity: hasSocialSecurity,
             hasProvidentFund: hasProvidentFund,
@@ -56,25 +57,41 @@ struct AddJobView: View {
             myJob?.company = company
             myJob?.department = department
             myJob?.location = location
-            myJob?.minSalary = minSalary
-            myJob?.maxSalary = maxSalary
-            myJob?.workStyleIndex = workStyleIndex
-            myJob?.workTimeIndex = workTimeIndex
+            
+            myJob?.minSalary = Int(minSalary)
+            myJob?.maxSalary = Int(maxSalary)
+            
+            myJob?.workStyle = workStyleIndex == -1 ? WorkStyle.unknown : Constants.Job.WorkStyle[workStyleIndex]
+            myJob?.workTime = workTimeIndex == -1 ? WorkTime.unknown :
+            Constants.Job.workTimes[workTimeIndex]
+            
             myJob?.hasProvidentFund = hasProvidentFund
             myJob?.hasbonusFrequency = hasbonusFrequency
             myJob?.hasSocialSecurity = hasSocialSecurity
             myJob?.hasEquipment = hasEquipment
+            
             myJob?.imageData = selectedPhotoData
         }
         
         myJob = nil
     }
     
+    private func switchSalary() {
+        if let minInt = Int(minSalary), let maxInt = Int(maxSalary)  {
+            if(minInt > maxInt) {
+                let tempMin = minInt
+                minSalary = "\(maxInt)"
+                maxSalary = "\(tempMin)"
+            }
+        }
+    }
+
     
     var body: some View { // open-view
         VStack(alignment: .leading){ // open-vstack
             
             HStack { // open-hstack
+                
                 Button(action: {
                     dismiss()
                 }) {
@@ -83,10 +100,12 @@ struct AddJobView: View {
                 Spacer()
                 Button(action: {
                     dismiss()
-
+                    
                     if myJob != nil {
+                        switchSalary()
                         updateItem(myJob!)
                     } else {
+                        switchSalary()
                         addItem()
                     }
                     
@@ -154,9 +173,6 @@ struct AddJobView: View {
                     }
 
                     
-                    
-
-                    
                     // **** company-name ****
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Company Name*")
@@ -206,17 +222,17 @@ struct AddJobView: View {
                                 .font(.headline)
                             Spacer()
                             Button(action: {
-                                workTimeIndex = 3
+                                workTimeIndex = -1
                             }) {
-                                if workTimeIndex < 3 && workTimeIndex != -1  {
+                                if workTimeIndex != -1  {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
                             }
                         }
                         Picker(selection: $workTimeIndex, label: Text("")) {
-                            ForEach(0 ..< 2) {
-                                Text(self.workTimes[$0].rawValue)
+                            ForEach(0 ..< Constants.Job.workTimes.count, id: \.self) {
+                                Text(Constants.Job.workTimes[$0].rawValue)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
@@ -232,7 +248,7 @@ struct AddJobView: View {
                             Button(action: {
                                 workStyleIndex = -1
                             }) {
-                                if workStyleIndex < 3 && workStyleIndex != -1 {
+                                if workStyleIndex != -1 {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
@@ -240,8 +256,8 @@ struct AddJobView: View {
                         }
                         
                         Picker(selection: $workStyleIndex, label: Text("")) {
-                            ForEach(0 ..< 3) {
-                                Text(self.workStyles[$0].rawValue)
+                            ForEach(0 ..< Constants.Job.WorkStyle.count, id: \.self) {
+                                Text(Constants.Job.WorkStyle[$0].rawValue)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
@@ -277,12 +293,20 @@ struct AddJobView: View {
         .onAppear {
             if let job = myJob {
                 company = job.company
-                department = job.department ?? ""
+                department = job.department 
                 location = job.location ?? ""
-                minSalary = job.minSalary ?? ""
-                maxSalary = job.maxSalary ?? ""
-                workStyleIndex = job.workStyleIndex ?? -1
-                workTimeIndex = job.workTimeIndex ?? -1
+                minSalary = job.minSalary != nil ? String(job.minSalary!) : ""
+                maxSalary = job.maxSalary != nil ? String(job.maxSalary!) : ""
+                if let indexStyle = Constants.Job.WorkStyle.firstIndex(of: job.workStyle) {
+                    workStyleIndex = indexStyle
+                } else {
+                    workStyleIndex = -1
+                }
+                if let indexTime = Constants.Job.workTimes.firstIndex(of: job.workTime) {
+                    workTimeIndex = indexTime
+                } else {
+                    workTimeIndex = -1
+                }
                 hasbonusFrequency = job.hasbonusFrequency
                 hasSocialSecurity = job.hasSocialSecurity
                 hasProvidentFund = job.hasProvidentFund
@@ -310,80 +334,4 @@ struct AddJobView: View {
             }
          }
     } // close-view
-}
-
-
-struct CustomTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding(10)
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
-    }
-}
-
-struct CustomTextField: View {
-    @Binding var text: String
-    var placeholder: String
-    
-    var body: some View {
-        TextField(placeholder, text: $text)
-            .padding(10)
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
-            .overlay(
-                HStack {
-                    Spacer()
-                    if !text.isEmpty {
-                        Button(action: {
-                            self.text = ""
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.trailing, 8)
-                    }
-                }
-            )
-    }
-}
-
-
-struct NumberTextField: View {
-    
-    @Binding var text: String
-    var placeholder: String
-    
-    var body: some View {
-        HStack {
-            TextField(placeholder, text: $text)
-                .padding(10)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .keyboardType(.numberPad)
-                .overlay(
-                    HStack {
-                        Spacer()
-                        Text("B")
-                            .foregroundColor(.gray)
-                            .padding(.trailing, 8)
-                    }
-                )
-
-        }
-    }
-}
-
-struct CheckboxToggleStyle: ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 20.0) {
-            Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundColor(configuration.isOn ? .accentColor : .secondary)
-                .onTapGesture { configuration.isOn.toggle() }
-            configuration.label
-            
-        }
-    }
 }

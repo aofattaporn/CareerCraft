@@ -80,7 +80,7 @@ struct SelectLabels: View {
             )
                 .padding(.all, 5)
                 .font(.body)
-                .background(filterJobTypeKeys.contains(text) ? Color("secondary") : Color("bg-grey"))
+                .background(filterJobTypeKeys.contains(text) ? Color("secondary-app") : Color("bg-grey"))
                 .foregroundColor(filterJobTypeKeys.contains(text) ? .white : .gray)
                 .cornerRadius(5)
         })

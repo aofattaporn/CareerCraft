@@ -39,20 +39,7 @@ struct JobItemView: View {
                     }
                 )
 
-//                .clipShape(
-//                    Path { path in
-//                        path.move(to: CGPoint(x: 0, y: 0))
-//                        path.addLine(to: CGPoint(x: UIScreen.main.bounds.width, y: 0))
-//                        path.addLine(to: CGPoint(x: UIScreen.main.bounds.width, y: 200))
-//                        path.addLine(to: CGPoint(x: 0, y: 200))
-//                        path.addLine(to: CGPoint(x: 0, y: 0))
-//                    }
-//                )
 
-
-
-            
-            
             // *** Right section ***
             HStack {
                 VStack(alignment: .leading) { // open-vstack
@@ -60,9 +47,9 @@ struct JobItemView: View {
                     Text("\(self.jobItem.company)")
                         .bold()
                         .font(.body)
-                    Text("\(self.jobItem.department!)")
+                    Text("\(self.jobItem.department)")
                         .font(.callout)
-                        .foregroundColor(Color("primary"))
+                        .foregroundColor(Color("primary-app"))
                     Spacer()
                 } // close-vstack
                 .background(Color.white)
@@ -83,7 +70,7 @@ struct JobItemView: View {
                 .stroke(Color("bg-grey"), lineWidth: 3)
         )
         .cornerRadius(10)
-        .accessibility(label: Text("\(jobItem.company), \(jobItem.department ?? "")"))
+        .accessibility(label: Text("\(jobItem.company), \(jobItem.department)"))
 
         
         
@@ -92,8 +79,3 @@ struct JobItemView: View {
         
     
 }
-    
-
-//#Preview {
-//    JobItemView(jobItem: Job(company: "Tech Solutions Inc.", department: "Engineering", salaryRange: "$50,000 - $70,000", location: "New York", workStyle: .onsite, workTime: .fixed, hasbonusFrequency: true, hasSocialSecurity: true, hasProvidentFund: true, hasEquipment: true))
-//}

@@ -15,13 +15,12 @@ enum Tabs {
 
 struct MainView: View {
     
-    @Environment(\.modelContext) private var modelContext
-    @Query private var jobs: [Job]
-    
+    // attributes: controllers tab views
     @State var selectedTab = Tabs.ShowJobListView
     @State var isListJobView: Bool = true
     @State var isCompareJob: Bool = false
     
+    // method: date format 
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -54,7 +53,7 @@ struct MainView: View {
                     .padding(.bottom, 30)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
-                        LinearGradient(gradient: Gradient(colors: [Color("secondary"), Color("primary")]), startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(gradient: Gradient(colors: [Color("secondary-app"), Color("primary-app")]), startPoint: .leading, endPoint: .trailing)
                     )
                     .cornerRadius(10)
                     .padding(.all)
@@ -65,8 +64,8 @@ struct MainView: View {
                         Text("List Job")
                             .frame(width: 150)
                             .padding(.vertical)
-                            .background(isListJobView  ? Color("primary") : Color("bg-grey"))
-                            .foregroundColor(isListJobView  ? .white : Color("primary"))
+                            .background(isListJobView  ? Color("primary-app") : Color("bg-grey"))
+                            .foregroundColor(isListJobView  ? .white : Color("primary-app"))
                             .cornerRadius(5)
                             .onTapGesture {
                                 self.selectedTab = .ShowJobListView
@@ -76,8 +75,8 @@ struct MainView: View {
                         Text("Compare Job")
                             .frame(width: 150)
                             .padding(.vertical)
-                            .background(isCompareJob  ? Color("primary") : Color("bg-grey"))
-                            .foregroundColor(isCompareJob  ? .white : Color("primary"))
+                            .background(isCompareJob  ? Color("primary-app") : Color("bg-grey"))
+                            .foregroundColor(isCompareJob  ? .white : Color("primary-app"))
                             .cornerRadius(5)
                             .onTapGesture {
                                 self.selectedTab = .CompareJobView
@@ -106,8 +105,6 @@ struct MainView: View {
                 
             } // close-vstack
             
-            
- 
         } // close-navigation
     }
 }
