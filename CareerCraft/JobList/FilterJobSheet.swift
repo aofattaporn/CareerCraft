@@ -12,58 +12,63 @@ struct FilterJobSheet: View {
     
     @Environment(\.dismiss) var dismiss
 
+    @Binding var filterWorkStyleIndex: Int
+    @Binding var filterWorkTimeIndex: Int
+    @Binding var filterMinSalary: String
+    @Binding var filterMaxSalary: String
     
-    @Query var jobItem: [Job]
-    @Binding var workStyleIndex: Int
-    @Binding var workTimeIndex: Int
-    @Binding var minSalary: String
-    @Binding var maxSalary: String
-
-    
-    @Binding var isFilter: Bool
-    
-    @State private var filteredJobs: [Job] = []
-    
+    @State var tempWorkStyleIndex: Int = -1
+    @State var tempWorkTimeIndex: Int = -1
+    @State var tempMinSalary: String = ""
+    @State var tempMaxSalary: String = ""
+            
     private func resetFilter() {
-        self.workTimeIndex = -1
-        self.workStyleIndex = -1
-        self.minSalary = ""
-        self.maxSalary = ""
+        self.tempWorkStyleIndex = -1
+        self.tempWorkTimeIndex = -1
+        self.tempMinSalary = ""
+        self.tempMaxSalary = ""
     }
-
     
+    private func applyFilter() {
+        filterWorkStyleIndex = tempWorkStyleIndex
+        filterWorkTimeIndex = tempWorkTimeIndex
+        filterMinSalary = tempMinSalary
+        filterMaxSalary = tempMaxSalary
+    }
+    
+    private func checkFilterDirty() ->Bool {
+        if (
+            filterWorkStyleIndex != tempWorkStyleIndex ||
+            filterWorkTimeIndex != tempWorkTimeIndex ||
+            filterMinSalary != tempMinSalary ||
+            filterMaxSalary != tempMaxSalary
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0.0) {
-
             
             HStack{
                 Spacer()
                 Button(action: {
-                    isFilter = false
                     resetFilter()
                 }) {
                     Text("Reset")
                         .font(.headline)
-                        .foregroundColor(
-                            workStyleIndex == -1 &&
-                            workTimeIndex == -1 &&
-                            minSalary == "" &&
-                            maxSalary == ""
-                            ? Color.gray : Color.blue
-                        )
-                        .disabled(
-                            workStyleIndex == -1 &&
-                            workTimeIndex == -1 &&
-                            minSalary == "" &&
-                            maxSalary == ""
-                        )
                 }
             }
             .padding()
             .padding(.top, 20)
             
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0.0) {
+            ScrollView { // open-scrollview
+                
+                VStack(alignment: .leading, spacing: 0.0) { // open-view
                     
                     // **** Salary Range ****
                     VStack(alignment: .leading, spacing: 5) {
@@ -73,16 +78,16 @@ struct FilterJobSheet: View {
                         HStack {
                             HStack {
                                 
-                                TextField("Min", text: $minSalary)
+                                TextField("Min", text: $tempMinSalary)
                                     .padding(10)
                                     .background(Color.gray.opacity(0.1))
                                     .cornerRadius(8)
                                     .keyboardType(.numberPad)
-                                    .onChange(of: minSalary) {
-                                         if let intValue = Int(minSalary) {
-                                             minSalary = String(intValue)
+                                    .onChange(of: tempMinSalary) {
+                                         if let intValue = Int(tempMinSalary) {
+                                             tempMinSalary = String(intValue)
                                          } else {
-                                             minSalary = ""
+                                             tempMinSalary = ""
                                          }
                                      }
                                      .overlay(
@@ -97,16 +102,16 @@ struct FilterJobSheet: View {
                             }
                             HStack {
                                 
-                                TextField("Min", text: $maxSalary)
+                                TextField("Max", text: $tempMaxSalary)
                                     .padding(10)
                                     .background(Color.gray.opacity(0.1))
                                     .cornerRadius(8)
                                     .keyboardType(.numberPad)
-                                    .onChange(of: maxSalary) {
-                                         if let intValue = Int(maxSalary) {
-                                             maxSalary = String(intValue)
+                                    .onChange(of: tempMaxSalary) {
+                                         if let intValue = Int(tempMaxSalary) {
+                                             tempMaxSalary = String(intValue)
                                          } else {
-                                             maxSalary = ""
+                                             tempMaxSalary = ""
                                          }
                                      }
                                      .overlay(
@@ -130,16 +135,16 @@ struct FilterJobSheet: View {
                                 .font(.headline)
                             Spacer()
                             Button(action: {
-                                workTimeIndex = -1
+                                tempWorkTimeIndex = -1
                             }) {
-                                if workTimeIndex != -1 {
+                                if tempWorkTimeIndex != -1 {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
                             }
                         }
                         
-                        Picker(selection: $workTimeIndex, label: Text("")) {
+                        Picker(selection: $tempWorkTimeIndex, label: Text("")) {
                             ForEach(0 ..< Constants.Job.workTimes.count, id: \.self) {
                                 Text(Constants.Job.workTimes[$0].rawValue)
                             }
@@ -155,16 +160,16 @@ struct FilterJobSheet: View {
                                 .font(.headline)
                             Spacer()
                             Button(action: {
-                                workStyleIndex = -1
+                                tempWorkStyleIndex = -1
                             }) {
-                                if workStyleIndex != -1 {
+                                if tempWorkStyleIndex != -1 {
                                     Text("Clear")
                                         .foregroundColor(.red)
                                 }
                             }
                         }
                         
-                        Picker(selection: $workStyleIndex, label: Text("")) {
+                        Picker(selection: $tempWorkStyleIndex, label: Text("")) {
                             ForEach(0 ..< Constants.Job.WorkStyle.count, id: \.self) {
                                 Text(Constants.Job.WorkStyle[$0].rawValue)
                             }
@@ -172,26 +177,35 @@ struct FilterJobSheet: View {
                         .pickerStyle(SegmentedPickerStyle())
                     }
                     .padding()
+                    
                 }
             }
+        }.onAppear{
+            tempWorkTimeIndex = filterWorkTimeIndex
+            tempWorkStyleIndex = filterWorkStyleIndex
+            tempMaxSalary = filterMaxSalary
+            tempMinSalary = filterMinSalary
         }
         
         Spacer()
         
         HStack {
             Button(action: {
-                isFilter = true
+                applyFilter()
                 dismiss()
             }) {
                 Text("Apply")
                     .font(.headline)
                     .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(Color.red)
+                    .background(Color.red).opacity(!checkFilterDirty() ? 0.5 : 1)
                     .foregroundColor(.white)
+                    
             }
+            .disabled(!checkFilterDirty())
             .cornerRadius(10)
             .padding()
         }
+        
     }
 }
 

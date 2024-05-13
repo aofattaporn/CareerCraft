@@ -147,7 +147,7 @@ struct AddJobView: View {
                             if selectedPhotoData == nil {
                                 ZStack {
                                     Rectangle()
-                                        .foregroundColor(Color.gray)
+                                        .foregroundColor(Color.gray).opacity(0.5)
                                         .frame(height: 200)
                                         .cornerRadius(10)
                                     Image(systemName: "photo")

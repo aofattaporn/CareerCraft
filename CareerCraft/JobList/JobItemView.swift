@@ -20,7 +20,7 @@ struct JobItemView: View {
 
             Rectangle()
                 .fill(Color.gray.opacity(0.5))
-                .frame(height: 120)
+                .frame(height: 150)
                 .overlay(
                     Group {
                         if let selectedPhotoData = jobItem.imageData,
@@ -52,14 +52,14 @@ struct JobItemView: View {
                         .foregroundColor(Color("primary-app"))
                     Spacer()
                 } // close-vstack
+                .padding()
                 .background(Color.white)
-                .padding(.vertical)
                 
                 Spacer(minLength: 18)
             }
             
         }  // close-hstack-1
-        .frame(minHeight: 120)
+//        .frame(minHeight: 120)
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)

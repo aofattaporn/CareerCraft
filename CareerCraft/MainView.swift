@@ -106,7 +106,9 @@ struct MainView: View {
             } // close-vstack
             
         } // close-navigation
+        
     }
+       
 }
 
 #Preview {

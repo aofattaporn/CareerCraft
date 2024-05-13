@@ -13,8 +13,6 @@ struct CompareJobView: View {
     
 
     @State private var showSelectLabels = false
-    let workStyles: [WorkStyle] = [.onsite, .online, .hybrid]
-    let workTimes: [WorkTime] = [.flexible, .fixed]
     
     @State var company1: Job?
     @State var company2: Job?

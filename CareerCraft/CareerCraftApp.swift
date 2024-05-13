@@ -26,7 +26,7 @@ struct CareerCraftApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView().preferredColorScheme(.light)
         }
         .modelContainer(sharedModelContainer)
     }

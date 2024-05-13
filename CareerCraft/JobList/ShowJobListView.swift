@@ -28,52 +28,39 @@ struct ShowJobListView: View {
     @State private var selectedItem: Job?
     
     @State private var searchJob: String = ""
-    @State private var showFilterJobSheet = false
     
-    @State private var showDeleteSheet = false
-    
+    @State private var showDeleteSheet:Bool = false
     @State var showAlert = false
-    @State var showAddItemView = false
     
-    @State private var companyName: String = ""
-    @State private var departmentName: String = ""
-    @State private var location: String = ""
-    @State private var minSalary: String = ""
-    @State private var maxSalary: String = ""
-    @State private var workStyleIndex: Int = -1
-    @State private var workTimeIndex: Int = -1
-    @State private var hasbonusFrequency: Bool = false
-    @State private var hasSocialSecurity: Bool = false
-    @State private var hasProvidentFund: Bool = false
-    @State private var hasEquipment: Bool = false
-    
+    @State private var showFilterJobSheet:Bool = false
     @State private var filterWorkStyleIndex: Int = -1
     @State private var filterWorkTimeIndex: Int = -1
-    @State  var filterMinSalary: String = ""
-    @State  var filterMaxSalary: String = ""
+    @State private var filterMinSalary: String = ""
+    @State private var filterMaxSalary: String = ""
     
-    @State private var isEditing: Bool = false
-    @State private var isCreating: Bool = true
-    
-    @State private var isFilter: Bool = false
-    
-    private func switchSalary() {
-        if let minInt = Int(filterMinSalary), let maxInt = Int(filterMaxSalary)  {
-            if(minInt > maxInt) {
-                let tempMin = minInt
-                minSalary = "\(maxInt)"
-                maxSalary = "\(tempMin)"
-            }
+    @State var showAddItemView = false
+        
+    private func checkFilterDirty() ->Bool {
+        if (
+            filterWorkStyleIndex == -1 &&
+            filterWorkTimeIndex == -1 &&
+            filterMinSalary == "" &&
+            filterMaxSalary == ""
+        ) {
+            return false
+        } else {
+            return true
         }
     }
     
+
     var searchResults: [Job] {
         
         // Filter job
         
         var filterJob = jobs
         
-        if(isFilter == true) {
+        if(checkFilterDirty()) {
             
             if filterWorkStyleIndex != -1 {
                 filterJob = filterJob.filter { $0.workStyle == Constants.Job.WorkStyle[filterWorkStyleIndex] }
@@ -82,8 +69,6 @@ struct ShowJobListView: View {
             if filterWorkTimeIndex != -1 {
                 filterJob = filterJob.filter { $0.workTime == Constants.Job.workTimes[filterWorkTimeIndex] }
             }
-            
-            switchSalary()
             
             if let min = Int(filterMinSalary) {
                 filterJob = filterJob.filter { Int($0.minSalary ?? 0) >= min }
@@ -94,7 +79,6 @@ struct ShowJobListView: View {
             }
             
         }
-        
         return searchJob.isEmpty ? filterJob : filterJob.filter { $0.company.lowercased().contains(searchJob.lowercased())  ||
             $0.department.lowercased().contains(searchJob.lowercased())
         }
@@ -119,21 +103,28 @@ struct ShowJobListView: View {
                 Button(action: {
                     self.showFilterJobSheet.toggle()
                 }) { // open-filtern-btn
-                    Image(systemName: "slider.horizontal.3")
-                         .padding()
-                         .foregroundColor(Color("secondary-app"))
-                         .font(.system(size: 24))
+                    ZStack{
+                        Image(systemName: "slider.horizontal.3")
+                             .padding()
+                             .foregroundColor(Color("secondary-app"))
+                             .font(.system(size: 24))
+                        
+                        if(checkFilterDirty()){
+                            Circle()
+                                .frame(width: 8, height: 8)
+                                .foregroundColor(.red)
+                                .offset(x: 16, y: -10)
+                        }
+                    }
                 } // close-filtern-btn
                 .sheet(isPresented: $showFilterJobSheet) {
                     if #available(iOS 16.0, *) {
                         FilterJobSheet(
-                            workStyleIndex: $filterWorkStyleIndex,
-                            workTimeIndex: $filterWorkTimeIndex, 
-                            minSalary: $filterMinSalary,
-                            maxSalary: $filterMaxSalary,
-                            
-                            isFilter: $isFilter
-                        )
+                            filterWorkStyleIndex: $filterWorkStyleIndex,
+                            filterWorkTimeIndex: $filterWorkTimeIndex,
+                            filterMinSalary: $filterMinSalary,
+                            filterMaxSalary: $filterMaxSalary
+                            )
                             .presentationDetents([.fraction(0.70)])
                     
                     }
@@ -145,43 +136,37 @@ struct ShowJobListView: View {
                 
                 ScrollView([.vertical]){ // open-scrollview-1
                     VStack {
-                        ForEach(searchResults) { item in
-                                JobItemView(jobItem: item)
-                                .onTapGesture {
-//                                    self.companyName = item.company
-//                                    self.departmentName = item.department ?? ""
-//                                    self.location = item.location ?? ""
-//                                    self.minSalary = item.minSalary != 0 ? String(item.minSalary ?? 0) : ""
-//                                    self.maxSalary = item.maxSalary != 0 ? String(item.maxSalary ?? 0) : ""
-//                                    self.workStyleIndex = -1
-//                                    self.workTimeIndex = -1
-//                                    self.hasbonusFrequency = item.hasbonusFrequency
-//                                    self.hasSocialSecurity = item.hasSocialSecurity
-//                                    self.hasProvidentFund = item.hasProvidentFund
-//                                    self.hasEquipment = item.hasEquipment
-                                    
-                                    self.selectedItem = item
-                                    self.showAddItemView.toggle()
-                                }
-                                .fullScreenCover(isPresented: $showAddItemView){
-                                    AddJobView(myJob: $selectedItem)
-                                }
-                                .onLongPressGesture {
-                                    self.showAlert.toggle()
-                                    self.selectedItem = item
-                                }
-                                .alert(isPresented: $showAlert) {
-                                    Alert(
-                                        title: Text("Just a moment"),
-                                        message: Text("Are you sure you want to delete this item?"),
-                                        primaryButton: .cancel(Text("Cancel")),
-                                        secondaryButton: .destructive(Text("OK")) {
-                                            deleteItems(job: self.selectedItem!)
-                                        }
-                                    )
-                                }
+                        if searchResults.isEmpty {
+                            Text("No Result Found")
+                        }else {
+                            ForEach(searchResults) { item in
+                                    JobItemView(jobItem: item)
+                                    .onTapGesture {
+                                        self.selectedItem = item
+                                        self.showAddItemView.toggle()
+                                    }
+                                    .fullScreenCover(isPresented: $showAddItemView){
+                                        AddJobView(myJob: $selectedItem)
+                                    }
+                                    .onLongPressGesture {
+                                        self.showAlert.toggle()
+                                        self.selectedItem = item
+                                    }
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(
+                                            title: Text("Just a moment"),
+                                            message: Text("Are you sure you want to delete this item?"),
+                                            primaryButton: .cancel(Text("Cancel")),
+                                            secondaryButton: .destructive(Text("OK")) {
+                                                deleteItems(job: self.selectedItem!)
+                                            }
+                                        )
+                                    }
+                                
+                            }
                             
                         }
+                
                     }
                 } // close-scrollview-1
                 .defaultScrollAnchor(.top)
